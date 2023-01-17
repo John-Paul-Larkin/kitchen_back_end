@@ -1,8 +1,14 @@
 import React from "react";
-import "./App.css";
+import Test from "./components/Test";
+import "./styles/App.css";
 
 function App() {
-  return <></>;
+  return (
+    <>
+    hi
+    <Test/>
+    </>
+  );
 }
 
 export default App;
