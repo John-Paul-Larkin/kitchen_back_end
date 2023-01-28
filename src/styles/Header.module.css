@@ -1,19 +1,19 @@
 .header-background {
   background-color: pink;
-  height: 100px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .station-button {
-  height: 90px;
+  height: 25px;
   width: 200px;
   display: inline-block;
   background-color: yellow;
   border-radius: 10px;
   margin-right: 10px;
-  font-size: 3em;
+  /* font-size: 3em; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +21,7 @@
 }
 
 .station-button-selected {
-  height: 100px;
+  height: 30px;
   width: 200px;
   display: inline-block;
   background-color: rgb(30, 65, 47);
@@ -29,7 +29,8 @@
   border: 1px solid white;
   border-bottom:none;
   margin-right: 10px;
-  font-size: 3em;
+  /* font-size: 3em; */
+  color:white;
   display: flex;
   align-items: center;
   justify-content: center;

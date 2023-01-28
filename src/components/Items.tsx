@@ -5,11 +5,11 @@ import styles from "../styles/MainScreen.module.css";
 export default function Items({ item }: { item: MenuItem }) {
   const { selectedStation } = useContext(stationContext);
 
-
-  const ingredientsNotSelected = item.ingredients.filter((item) => item.selected === false);
-  const ingredientsSelected = item.ingredients.filter((item) => item.selected === true && item.added !== true);
-  const ingredientsAdded = item.ingredients.filter((item) => item.added === true);
-
+  
+    const ingredientsNotSelected = item.ingredients.filter((item) => item.selected === false);
+    const ingredientsSelected = item.ingredients.filter((item) => item.selected === true && item.added !== true);
+    const ingredientsAdded = item.ingredients.filter((item) => item.added === true);
+  
   return (
     <div>
       <div className={styles[`${item.station === selectedStation ? "item" : "item-highlight"}`]}>{item.name}</div>

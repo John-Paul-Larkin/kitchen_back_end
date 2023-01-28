@@ -6,23 +6,28 @@ import Header from "./Header";
 import Orders from "./Orders";
 
 export default function MainScreen() {
-  const [orders, setOrders] = useState<OrderDetails[]>([]);
+  const [openOrders, setOpenOrders] = useState<OrderDetails[]>([]);
+  const [timeUpOrders, setTimeUpOrders] = useState<OrderDetails[]>([]);
 
   useEffect(() => {
     const q = query(collection(db, "orders"), where("orderStatus", "==", "pending"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let openOrders: OrderDetails[] = [];
+      let orders: OrderDetails[] = [];
 
       querySnapshot.forEach((doc) => {
-        openOrders.push(doc.data() as OrderDetails);
+        orders.push(doc.data() as OrderDetails);
       });
 
-      openOrders.sort((a, b) => {
-        return a.timeOrderPlaced! - b.timeOrderPlaced!;
-      });
+      const open = orders.filter((order) => order.timeOrderPlaced! + 600000 > new Date().getTime());
+      const timeUp = orders.filter((order) => order.timeOrderPlaced! + 600000 < new Date().getTime());
 
-      setOrders([...openOrders]);
+      // openOrders.sort((a, b) => {
+      //   return b.timeOrderPlaced! - a.timeOrderPlaced!;
+      // });
+
+      setOpenOrders([...open]);
+      setTimeUpOrders([...timeUp]);
     });
 
     return () => unsubscribe();
@@ -31,7 +36,12 @@ export default function MainScreen() {
   return (
     <div className={styles["main-screen"]}>
       <Header />
-      <div className={styles["orders-wrapper"]}>{orders && orders.map((order) => <Orders key={order.orderId} order={order} />)}</div>
+      <div  className={styles["orders-wrapper"]}>
+        <div className={styles["open-orders-wrapper"]}>{openOrders && openOrders.map((order) => <Orders key={order.orderId} order={order} />)}</div>
+        <div className={styles["timeup-orders-wrapper"]}>
+          {timeUpOrders && timeUpOrders.map((order) => <Orders key={order.orderId} order={order} />)}
+        </div>
+      </div>
     </div>
   );
 }
