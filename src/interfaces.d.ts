@@ -1,10 +1,10 @@
 interface OrderDetails {
   orderId: string;
   tableNumber: string;
-  timeOrderPlaced: Date | null;
+  timeOrderPlaced: number | null;
   server: string;
   orderItemDetails: MenuItem[];
-  orderStatus: "pending" | "time up" | "ready";
+  orderStatus: "pending" | "time up" | "ready" | "closed";
 }
 
 type Station = "bar" | "salad" | "fry" | "grill" | "expeditor";
@@ -13,9 +13,10 @@ interface MenuItem {
   name: string;
   price: number;
   itemId: string;
-  ingredients?: Ingredients[];
+  ingredients: Ingredients[];
   isSentToKitchen?: boolean;
   station: Station;
+  // orderID?: string;
 }
 interface Ingredients {
   ingredient: Ingredient;
@@ -50,3 +51,10 @@ type Ingredient =
   | "Pastry"
   | "Gravy"
   | "Mushrooms";
+
+//backend only
+
+interface ContextProvider {
+  selectedStation: Station;
+  setSelectedStation: React.Dispatch<React.SetStateAction<Station>>;
+}

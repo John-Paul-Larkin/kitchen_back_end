@@ -1,12 +1,14 @@
 import React from "react";
-import Test from "./components/Test";
+import MainScreen from "./components/MainScreen";
+import StationContext from "./context/StationContext";
 import "./styles/App.css";
 
 function App() {
   return (
     <>
-    hi
-    <Test/>
+      <StationContext>
+        <MainScreen />
+      </StationContext>
     </>
   );
 }

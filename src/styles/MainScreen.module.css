@@ -1,0 +1,50 @@
+.main-screen {
+  width: 100%;
+  height: 100vh;
+  background-color: red;
+}
+
+.orders-wrapper {
+  width: 100%;
+  height: calc(100vh - 100px);
+  background-color: rgb(30, 65, 47);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.single-order {
+  background-color: bisque;
+  display: inline-block;
+  padding: 1em;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.item {
+  background-color: blue;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.item-highlight {
+  background-color: orange;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.not-selected {
+  border: 1px solid black;
+  color: red;
+  padding: 3px;
+  /* padding-top: .5em; */
+}
+
+.added {
+  border: 1px solid black;
+  color: brown;
+  padding: 3px;
+  /* padding-top: .5em; */
+}
