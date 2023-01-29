@@ -1,13 +1,11 @@
-import db from "../firebase/firebaseconfig";
-
-import { isArray, isEqual, isObject, transform } from "lodash";
+// import { isArray, isEqual, isObject, transform } from "lodash";
 
 // import isArray from "lodash/isArray"
 import styles from "../styles/MainScreen.module.css";
 
-import { doc, onSnapshot } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
-import { inspect } from "util";
+// import { doc, onSnapshot } from "firebase/firestore";
+import { useContext, useState } from "react";
+// import { inspect } from "util";
 import { stationContext } from "../context/StationContext";
 import Items from "./Items";
 import Stopwatch from "./Stopwatch";
@@ -18,23 +16,23 @@ export default function Orders({ order }: { order: OrderDetails }) {
   //   const unsubscribe = onSnapshot(doc(db, "orders", order.orderId), (doc) => {
   //     const data = doc.data() as OrderDetails;
 
-      //   console.log("here");
+  //   console.log("here");
 
-      // const diff = difference(order, data);
-      //   console.log("here 2");
+  // const diff = difference(order, data);
+  //   console.log("here 2");
 
-      //   console.log(diff);
+  //   console.log(diff);
 
-    //   if (Object.keys(diff).length !== 0) {
-    //     console.log("inspect", inspect(diff, { showHidden: true, depth: null, colors: true }));
-    //     console.log("diff   ", diff);
-    //     console.log("order  ", order);
-    //     // if (diff.hasOwnProperty("orderItemDetails")) {
-    //     if (diff.orderItemDetails.ingredients.selected) {
-    //       console.log("changed to", diff.orderItemDetails.ingredients.selected);
-    //     }
-    //   }
-    // });
+  //   if (Object.keys(diff).length !== 0) {
+  //     console.log("inspect", inspect(diff, { showHidden: true, depth: null, colors: true }));
+  //     console.log("diff   ", diff);
+  //     console.log("order  ", order);
+  //     // if (diff.hasOwnProperty("orderItemDetails")) {
+  //     if (diff.orderItemDetails.ingredients.selected) {
+  //       console.log("changed to", diff.orderItemDetails.ingredients.selected);
+  //     }
+  //   }
+  // });
 
   //   return () => unsubscribe();
   // }, [order]);

@@ -5,25 +5,26 @@
 }
 
 .orders-wrapper {
-  width:100%;
+  width: 100%;
   background-color: aqua;
   display: flex;
 }
 
 .open-orders-wrapper {
-  display:inline-block;
+  display: inline-block;
   height: calc(100vh - 30px);
   background-color: rgb(30, 65, 47);
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   flex-grow: 1;
+  position:relative;
 }
 
 .timeup-orders-wrapper {
   height: calc(100vh - 30px);
-  background-color:beige;
-    display: flex;
+  background-color: beige;
+  display: flex;
   align-items: flex-start;
   justify-content: flex-end;
 }
@@ -71,4 +72,20 @@
   border-radius: 20px;
   margin-top: 10px;
   font-weight: 600;
+}
+
+.test {
+  position: absolute;
+  color: white;
+  background-color: blue;
+}
+
+.single-order-test {
+  background-color: bisque;
+  display: inline-block;
+  padding: 0.4em;
+  border-radius: 20px;
+  margin: 5px;
+  width: 180px;
+  position:absolute;
 }
