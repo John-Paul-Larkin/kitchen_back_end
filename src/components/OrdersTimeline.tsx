@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/MainScreen.module.css";
-import OrdersTest from "./OrdersTest";
+import OrdersTest from "./OrdersPending";
 
 export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrders: OrderDetails[]; countOfTimeUp: number }) {
   const containerRef = useRef<HTMLInputElement | null>(null);
@@ -12,7 +12,7 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
   const remainingSpace = width - numberOfOrders * 190;
   //   const remaingSpaceAsPercentage = (remainingSpace / width) * 100;
 
-  //   console.log("reamining", remaingSpaceAsPercentage);
+  //   console.log("remaining", remaingSpaceAsPercentage);
 
   const [gapsInPixels, setGapsInPixels] = useState<number[]>([]);
 

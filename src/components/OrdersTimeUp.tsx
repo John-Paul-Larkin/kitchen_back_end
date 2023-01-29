@@ -1,17 +1,18 @@
+// import { isArray, isEqual, isObject, transform } from "lodash";
+
+// import isArray from "lodash/isArray"
 import styles from "../styles/MainScreen.module.css";
 
-import { useContext, useEffect, useState } from "react";
+// import { doc, onSnapshot } from "firebase/firestore";
+import { useContext, useState } from "react";
+// import { inspect } from "util";
 import { stationContext } from "../context/StationContext";
 import useFirestore from "../hooks/useFirestore";
 import Items from "./Items";
 import Stopwatch from "./Stopwatch";
 import Timer from "./Timer";
 
-interface orderDetailsWithGap extends OrderDetails {
-  gapInPixels: number;
-}
-
-export default function OrdersTest({ order }: { order: orderDetailsWithGap }) {
+export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
   const { selectedStation } = useContext(stationContext);
 
   const [isShowStopWatch, setIsShowStopWatch] = useState(false);
@@ -25,15 +26,12 @@ export default function OrdersTest({ order }: { order: orderDetailsWithGap }) {
 
   const sendFirestore = useFirestore();
 
-  useEffect(() => {
-    if (isShowStopWatch === true) {
-      sendFirestore({ orderID: order.orderId, type: "updateStatus", currentStatus: order.orderStatus });
-    }
-    console.log("here");
-  }, [isShowStopWatch]);
+  const handleOrderUpClick = () => {
+    sendFirestore({ orderID: order.orderId, type: "setReady" });
+  };
 
   return (
-    <div className={styles["single-order-test"]} style={{ left: order.gapInPixels }}>
+    <div className={styles["single-order"]}>
       {!isShowStopWatch && <Timer setIsShowStopWatch={setIsShowStopWatch} finishTime={finishTime} />}
       {isShowStopWatch && <Stopwatch startTime={finishTime} />}
       <span>
@@ -49,7 +47,9 @@ export default function OrdersTest({ order }: { order: orderDetailsWithGap }) {
             </div>
           );
         })}
-      <button className={styles["ready-button"]}>Order up</button>
+      <button className={styles["ready-button"]} onClick={handleOrderUpClick}>
+        Order up
+      </button>
     </div>
   );
 }

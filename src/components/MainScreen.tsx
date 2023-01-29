@@ -4,12 +4,14 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import db from "../firebase/firebaseconfig";
 import styles from "../styles/MainScreen.module.css";
 import Header from "./Header";
-import Orders from "./Orders";
+import OrdersReady from "./OrdersReady";
 import OrdersTimeline from "./OrdersTimeline";
+import Orders from "./OrdersTimeUp";
 
 export default function MainScreen() {
   const [openOrders, setOpenOrders] = useState<OrderDetails[]>([]);
   const [timeUpOrders, setTimeUpOrders] = useState<OrderDetails[]>([]);
+  const [readyOrders, setReadyOrders] = useState<OrderDetails[]>([]);
 
   console.log("oo", openOrders);
   console.log("tu", timeUpOrders);
@@ -21,12 +23,6 @@ export default function MainScreen() {
     // const q = query(collection(db, "orders"), where("orderStatus", "==", "pending"));
     const q = query(collection(db, "orders"));
 
-
-
-
-
-
-
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let orders: OrderDetails[] = [];
 
@@ -34,22 +30,20 @@ export default function MainScreen() {
         orders.push(doc.data() as OrderDetails);
       });
 
-      console.log(orders);
-
       // const open = orders.filter((order) => order.timeOrderPlaced! + 600000 > new Date().getTime());
       const open = orders.filter((order) => order.orderStatus === "pending");
 
       // const timeUp = orders.filter((order) => order.timeOrderPlaced! + 600000 < new Date().getTime());
       const timeUp = orders.filter((order) => order.orderStatus === "time up");
+      const ready = orders.filter((order) => order.orderStatus === "ready");
 
       open.sort((a, b) => {
         return b.timeOrderPlaced! - a.timeOrderPlaced!;
       });
 
-      console.log("tuu", timeUp);
-
       setOpenOrders([...open]);
       setTimeUpOrders([...timeUp]);
+      setReadyOrders([...ready]);
     });
 
     return () => unsubscribe();
@@ -63,6 +57,9 @@ export default function MainScreen() {
         {/* <div className={styles["open-orders-wrapper"]}>{openOrders && openOrders.map((order) => <Orders key={order.orderId} order={order} />)}</div> */}
         <div className={styles["timeup-orders-wrapper"]}>
           {timeUpOrders && timeUpOrders.map((order) => <Orders key={order.orderId} order={order} />)}
+        </div>
+        <div className={styles["ready-orders-wrapper"]}>
+          {readyOrders && readyOrders.map((order) => <OrdersReady key={order.orderId} order={order} />)}
         </div>
       </div>
     </div>
