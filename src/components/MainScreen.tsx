@@ -11,13 +11,21 @@ export default function MainScreen() {
   const [openOrders, setOpenOrders] = useState<OrderDetails[]>([]);
   const [timeUpOrders, setTimeUpOrders] = useState<OrderDetails[]>([]);
 
-  console.log(openOrders);
+  console.log("oo", openOrders);
+  console.log("tu", timeUpOrders);
 
   // const openOrders = useAppSelector(state=>state.openOrders)
   // const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const q = query(collection(db, "orders"), where("orderStatus", "==", "pending"));
+    // const q = query(collection(db, "orders"), where("orderStatus", "==", "pending"));
+    const q = query(collection(db, "orders"));
+
+
+
+
+
+
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let orders: OrderDetails[] = [];
@@ -25,6 +33,8 @@ export default function MainScreen() {
       querySnapshot.forEach((doc) => {
         orders.push(doc.data() as OrderDetails);
       });
+
+      console.log(orders);
 
       // const open = orders.filter((order) => order.timeOrderPlaced! + 600000 > new Date().getTime());
       const open = orders.filter((order) => order.orderStatus === "pending");
@@ -35,6 +45,8 @@ export default function MainScreen() {
       open.sort((a, b) => {
         return b.timeOrderPlaced! - a.timeOrderPlaced!;
       });
+
+      console.log("tuu", timeUp);
 
       setOpenOrders([...open]);
       setTimeUpOrders([...timeUp]);

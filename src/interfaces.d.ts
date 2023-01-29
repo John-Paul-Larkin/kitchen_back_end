@@ -4,8 +4,10 @@ interface OrderDetails {
   timeOrderPlaced: number | null;
   server: string;
   orderItemDetails: MenuItem[];
-  orderStatus: "pending" | "time up" | "ready" | "closed";
+  orderStatus: OrderStatus;
 }
+
+type OrderStatus =  "pending" | "time up" | "ready" | "closed";
 
 type Station = "bar" | "salad" | "fry" | "grill" | "expeditor";
 

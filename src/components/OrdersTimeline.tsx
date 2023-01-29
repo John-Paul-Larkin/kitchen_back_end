@@ -16,7 +16,7 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
 
   const [gapsInPixels, setGapsInPixels] = useState<number[]>([]);
 
-  console.log(gapsInPixels);
+  // console.log(gapsInPixels);
 
   useEffect(() => {
     let gapTime: number[] = [];
@@ -64,7 +64,7 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
     return () => window.removeEventListener("resize", handleResize);
   }, [widthOfTimeUpContainer]);
 
-  console.log(gapsInPixels);
+  // console.log(gapsInPixels);
   let gap = 0;
 
   const newOpenOrders = openOrders.map((orders, index) => {
@@ -77,7 +77,7 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
     return { ...orders, gapInPixels: gap };
   });
 
-  console.log(newOpenOrders);
+  // console.log(newOpenOrders);
 
   return (
     <div ref={containerRef} className={styles["open-orders-wrapper"]}>
