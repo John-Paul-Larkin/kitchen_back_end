@@ -29,10 +29,16 @@
   justify-content: flex-end;
 }
 
-.ready-orders-wrapper {
+.ready-closed-sidebar {
   height: calc(100vh - 30px);
   background-color: aquamarine;
   width: 100px;
+  border-left: 2px solid black;
+  overflow: hidden;
+
+}
+.closed-orders-sidebar {
+  border-top: 2px solid black;
 }
 
 .single-order-ready {
@@ -100,4 +106,21 @@
   margin: 5px;
   width: 180px;
   position: absolute;
+}
+
+.closed-orders-heading {
+  border-bottom: 1px solid black;
+  text-align: center;
+  padding: .7em 0 0 0 ;
+}
+
+.ready-orders-heading {
+  border-top: 2px solid black;
+  border-bottom: 1px solid black;
+  text-align: center;
+  padding: .7em 0 0 0 ;
+}
+
+.ready-list {
+  min-height: 117px;
 }

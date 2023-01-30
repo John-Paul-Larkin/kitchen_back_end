@@ -68,7 +68,7 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
 
   let gap = 0;
 
-  const newOpenOrders = openOrders.map((orders, index) => {
+  const openOrdersWithGap = openOrders.map((orders, index) => {
     if (index === 0) {
       gap += gapsInPixels[index];
     } else {
@@ -80,7 +80,7 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
 
   return (
     <div ref={containerRef} className={styles["open-orders-wrapper"]}>
-      <div>{newOpenOrders && newOpenOrders.map((order) => <OrdersPending key={order.orderId} order={order} />)}</div>
+      <div>{openOrdersWithGap && openOrdersWithGap.map((order) => <OrdersPending key={order.orderId} order={order} />)}</div>
     </div>
   );
 }

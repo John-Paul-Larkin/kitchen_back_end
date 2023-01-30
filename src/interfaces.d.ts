@@ -1,10 +1,13 @@
 interface OrderDetails {
   orderId: string;
   tableNumber: string;
-  timeOrderPlaced: number | null;
   server: string;
   orderItemDetails: MenuItem[];
   orderStatus: OrderStatus;
+  timeOrderPlaced: number | null;
+  timeTimeUp: number | null;
+  timeReady: number | null;
+  timeClosed: number | null;
 }
 
 type OrderStatus =  "pending" | "time up" | "ready" | "closed";

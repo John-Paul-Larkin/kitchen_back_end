@@ -27,7 +27,7 @@ export default function OrdersPending({ order }: { order: orderDetailsWithGap })
 
   useEffect(() => {
     if (isShowStopWatch === true) {
-      sendFirestore({ orderID: order.orderId, type: "updateStatus", currentStatus: order.orderStatus });
+      sendFirestore({ orderID: order.orderId, type: "setTimeUp", currentStatus: order.orderStatus });
     }
   }, [isShowStopWatch]);
 
