@@ -32,10 +32,6 @@
 .ready-orders-wrapper {
   height: calc(100vh - 30px);
   background-color: aquamarine;
-  /* display: flex;
-  align-items: flex-start;
-  justify-content: flex-end; */
-  /* flex-wrap: wrap; */
   width: 100px;
 }
 
@@ -44,8 +40,13 @@
   padding: 0.4em;
   border-radius: 20px;
   margin: 5px;
-  /* width: 100px; */
-  /* height:50px; */
+}
+
+.single-order-closed {
+  background-color: yellow;
+  padding: 0.4em;
+  border-radius: 5px;
+  margin: 5px;
 }
 
 .ready-button {
@@ -61,7 +62,7 @@
   background-color: bisque;
   padding: 0.4em;
   border-radius: 20px;
-  margin: 5px;
+  margin: 2px;
   width: 180px;
 }
 
@@ -83,23 +84,15 @@
   border: 1px solid black;
   color: red;
   padding: 3px;
-  /* padding-top: .5em; */
 }
 
 .added {
   border: 1px solid black;
   color: brown;
   padding: 3px;
-  /* padding-top: .5em; */
 }
 
-.test {
-  position: absolute;
-  color: white;
-  background-color: blue;
-}
-
-.single-order-test {
+.single-order-pending {
   background-color: bisque;
   display: inline-block;
   padding: 0.4em;

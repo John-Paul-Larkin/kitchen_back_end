@@ -29,11 +29,10 @@ export default function OrdersPending({ order }: { order: orderDetailsWithGap })
     if (isShowStopWatch === true) {
       sendFirestore({ orderID: order.orderId, type: "updateStatus", currentStatus: order.orderStatus });
     }
-    console.log("here");
   }, [isShowStopWatch]);
 
   return (
-    <div className={styles["single-order-test"]} style={{ left: order.gapInPixels }}>
+    <div className={styles["single-order-pending"]} style={{ left: order.gapInPixels }}>
       {!isShowStopWatch && <Timer setIsShowStopWatch={setIsShowStopWatch} finishTime={finishTime} />}
       {isShowStopWatch && <Stopwatch startTime={finishTime} />}
       <span>

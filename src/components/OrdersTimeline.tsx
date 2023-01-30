@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/MainScreen.module.css";
-import OrdersTest from "./OrdersPending";
+import OrdersPending from "./OrdersPending";
 
 export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrders: OrderDetails[]; countOfTimeUp: number }) {
   const containerRef = useRef<HTMLInputElement | null>(null);
@@ -50,13 +50,15 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
   }, [openOrders, remainingSpace]);
 
   useEffect(() => {
+    const widthOfReadySidePanel100px = 100;
+
     const handleResize = () => {
       if (containerRef.current?.clientWidth) {
-        setWidth(containerRef.current.clientWidth);
+        setWidth(containerRef.current.clientWidth - widthOfReadySidePanel100px);
       }
     };
     if (containerRef.current?.clientWidth) {
-      setWidth(containerRef.current.clientWidth);
+      setWidth(containerRef.current.clientWidth - widthOfReadySidePanel100px);
     }
 
     window.addEventListener("resize", handleResize);
@@ -64,7 +66,6 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
     return () => window.removeEventListener("resize", handleResize);
   }, [widthOfTimeUpContainer]);
 
-  // console.log(gapsInPixels);
   let gap = 0;
 
   const newOpenOrders = openOrders.map((orders, index) => {
@@ -77,12 +78,9 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
     return { ...orders, gapInPixels: gap };
   });
 
-  // console.log(newOpenOrders);
-
   return (
     <div ref={containerRef} className={styles["open-orders-wrapper"]}>
-      <div>{newOpenOrders && newOpenOrders.map((order) => <OrdersTest key={order.orderId} order={order} />)}</div>
-      <span className={styles["test"]}>{/* {width}:{remainingSpace} */}</span>
+      <div>{newOpenOrders && newOpenOrders.map((order) => <OrdersPending key={order.orderId} order={order} />)}</div>
     </div>
   );
 }
