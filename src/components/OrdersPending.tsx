@@ -1,10 +1,7 @@
-import styles from "../styles/MainScreen.module.css";
-
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { stationContext } from "../context/StationContext";
-import useFirestore from "../hooks/useFirestore";
+import styles from "../styles/MainScreen.module.css";
 import Items from "./Items";
-import Stopwatch from "./Stopwatch";
 import Timer from "./Timer";
 
 interface orderDetailsWithGap extends OrderDetails {
@@ -14,32 +11,21 @@ interface orderDetailsWithGap extends OrderDetails {
 export default function OrdersPending({ order }: { order: orderDetailsWithGap }) {
   const { selectedStation } = useContext(stationContext);
 
-  const [isShowStopWatch, setIsShowStopWatch] = useState(false);
-
   // Sorts the order to display a particular stations items at the top
   order.orderItemDetails.sort((a, b) => {
     return Number(b.station === selectedStation) - Number(a.station === selectedStation);
   });
 
-  const finishTime = new Date(order.timeOrderPlaced! + 600000);
-
-  const sendFirestore = useFirestore();
-
-  useEffect(() => {
-    if (isShowStopWatch === true) {
-      sendFirestore({ orderID: order.orderId, type: "setTimeUp", currentStatus: order.orderStatus });
-    }
-  }, [isShowStopWatch]);
+  const tenMinutes = 600000;
+  const timerFinishTime = new Date(order.timeOrderPlaced! + tenMinutes);
 
   return (
     <div className={styles["single-order-pending"]} style={{ left: order.gapInPixels }}>
-      {!isShowStopWatch && <Timer setIsShowStopWatch={setIsShowStopWatch} finishTime={finishTime} />}
-      {isShowStopWatch && <Stopwatch startTime={finishTime} />}
+      <Timer finishTime={timerFinishTime} order={order} />
       <span>
         Table {order.tableNumber}
         <span> - {order.server}</span>
       </span>
-
       {order &&
         order.orderItemDetails.map((item) => {
           return (

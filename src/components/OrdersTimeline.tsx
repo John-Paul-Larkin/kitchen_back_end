@@ -10,13 +10,8 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
 
   const numberOfOrders = openOrders.length;
   const remainingSpace = width - numberOfOrders * 190;
-  //   const remaingSpaceAsPercentage = (remainingSpace / width) * 100;
-
-  //   console.log("remaining", remaingSpaceAsPercentage);
 
   const [gapsInPixels, setGapsInPixels] = useState<number[]>([]);
-
-  // console.log(gapsInPixels);
 
   useEffect(() => {
     let gapTime: number[] = [];
@@ -24,7 +19,6 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
     const intervalID = setInterval(() => {
       let totalTime = 0;
       openOrders.forEach((order, index) => {
-        // const timeOrderPlaced = new Date(order.timeOrderPlaced!);
         const timeNow = new Date().getTime();
 
         const timeInterval = Math.floor((timeNow - order.timeOrderPlaced!) / 1000);
@@ -36,7 +30,6 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
           totalTime += timeInterval - totalTime;
         }
       });
-      //   gapTime.push(600 - totalTime); Dont need to calculate final gap?
 
       const gapTimeAsPercentage = gapTime.map((gap) => (gap / 600) * 100);
       const gapAsPixels = gapTimeAsPercentage.map((gapTime) => (remainingSpace * gapTime) / 100);
@@ -44,13 +37,13 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
       setGapsInPixels([...gapAsPixels]);
 
       gapTime = [];
-    }, 2000);
+    }, 1500);
 
     return () => clearInterval(intervalID);
   }, [openOrders, remainingSpace]);
 
   useEffect(() => {
-    const widthOfReadySidePanel100px = 100;
+    const widthOfReadySidePanel100px = 0; //Nescessary????????????????????
 
     const handleResize = () => {
       if (containerRef.current?.clientWidth) {

@@ -44,7 +44,7 @@ export default function useFirestore() {
       try {
         await updateDoc(doc(db, "orders", input.orderID), {
           orderStatus: "closed",
-          timeTimeUp: new Date().getTime(),
+          timeClosed: new Date().getTime(),
         });
       } catch (error) {
         console.log(error);

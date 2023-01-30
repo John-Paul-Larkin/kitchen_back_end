@@ -1,39 +1,41 @@
-// import { isArray, isEqual, isObject, transform } from "lodash";
-
-// import isArray from "lodash/isArray"
-import styles from "../styles/MainScreen.module.css";
-
-// import { doc, onSnapshot } from "firebase/firestore";
-import { useContext, useState } from "react";
-// import { inspect } from "util";
+import { useContext } from "react";
+import { useTimer } from "react-timer-hook";
 import { stationContext } from "../context/StationContext";
 import useFirestore from "../hooks/useFirestore";
+import styles from "../styles/MainScreen.module.css";
 import Items from "./Items";
 import Stopwatch from "./Stopwatch";
-import Timer from "./Timer";
 
 export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
-  const { selectedStation } = useContext(stationContext);
-
-  const [isShowStopWatch, setIsShowStopWatch] = useState(false);
-
   // Sorts the order to display a particular stations items at the top
+  const { selectedStation } = useContext(stationContext);
   order.orderItemDetails.sort((a, b) => {
     return Number(b.station === selectedStation) - Number(a.station === selectedStation);
   });
 
-  const finishTime = new Date(order.timeOrderPlaced! + 600000);
-
+  // button which sets order status to ready
   const sendFirestore = useFirestore();
-
   const handleOrderUpClick = () => {
     sendFirestore({ orderID: order.orderId, type: "setReady" });
   };
 
+  // sets a timer which automatically moves the order status to ready after 5 minutes
+  // if the user has not clicked the button
+  const fiveMinutes = 300000;
+  const timeToAutoSwitchToReady = new Date(order.timeTimeUp! + fiveMinutes);
+  useTimer({
+    expiryTimestamp: timeToAutoSwitchToReady,
+    onExpire: () => {
+      sendFirestore({ orderID: order.orderId, type: "setReady" });
+    },
+  });
+
+  //Starts the stopwatch from the moment the timer ends
+  const swStartTime = new Date(order.timeTimeUp!);
+
   return (
     <div className={styles["single-order"]}>
-      {!isShowStopWatch && <Timer setIsShowStopWatch={setIsShowStopWatch} finishTime={finishTime} />}
-      {isShowStopWatch && <Stopwatch startTime={finishTime} />}
+      <Stopwatch startTime={swStartTime} />
       <span>
         Table {order.tableNumber}
         <span> - {order.server}</span>

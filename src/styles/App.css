@@ -21,3 +21,10 @@ picture {
   max-width: 100%;
   display: block;
 }
+
+:root {
+  --one: #ad8b73;
+  --two: #ceab93;
+  --three: #e3caa5;
+  --four: #fffbe9;
+}

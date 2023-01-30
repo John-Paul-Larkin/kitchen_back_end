@@ -1,29 +1,26 @@
 import { useTimer } from "react-timer-hook";
+import useFirestore from "../hooks/useFirestore";
 
-export default function Timer({
-  setIsShowStopWatch,
-  finishTime,
-}: {
-  setIsShowStopWatch: React.Dispatch<React.SetStateAction<boolean>>;
-  finishTime: Date;
-}) {
+export default function Timer({ finishTime, order }: { finishTime: Date; order: OrderDetails }) {
+  const sendFirestore = useFirestore();
+
   const { seconds, minutes } = useTimer({
     expiryTimestamp: finishTime,
     onExpire: () => {
-      setIsShowStopWatch(true);
+      sendFirestore({ orderID: order.orderId, type: "setTimeUp", currentStatus: order.orderStatus });
     },
   });
 
-
-  let extraDigit:null|string = null;
-
-  if(seconds < 10 ) {
-    extraDigit = '0'
+   // extra digit for formatting under ten seconds
+  let extraDigit: null | string = null;
+  if (seconds < 10) {
+    extraDigit = "0";
   }
 
   return (
     <div>
-      {minutes}:{extraDigit}{seconds}
+      {minutes}:{extraDigit}
+      {seconds}
     </div>
   );
 }
