@@ -17,6 +17,7 @@ export default function Header() {
       {stations.map((station) => {
         return (
           <div
+            key={station}
             onClick={() => handleStationSelect(station)}
             className={styles[`${station === selectedStation ? "station-button-selected" : "station-button"}`]}
           >

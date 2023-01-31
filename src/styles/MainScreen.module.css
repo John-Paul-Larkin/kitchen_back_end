@@ -25,10 +25,12 @@
 
 .timeup-orders-wrapper {
   height: calc(100vh - 30px);
-  background-color: beige;
+  background-color: var(--one);
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
+  padding-top: 50px;
+
 }
 
 .ready-closed-sidebar {
@@ -63,6 +65,14 @@
 }
 
 .single-order {
+  background-color: bisque;
+  padding: 0.4em;
+  border-radius: 20px;
+  margin: 2px;
+  width: 180px;
+}
+
+.single-order-timeUp {
   background-color: bisque;
   padding: 0.4em;
   border-radius: 20px;
