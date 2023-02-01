@@ -1,13 +1,14 @@
 import { collection, onSnapshot, query } from "firebase/firestore";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import db from "../firebase/firebaseconfig";
+import useChangeOrdersStatusOnInintialLoad from "../hooks/useChangeOrdersStatusOnInintialLoad";
 import styles from "../styles/MainScreen.module.css";
 import Header from "./Header";
 import OrdersClosed from "./OrdersClosed";
 import OrdersReady from "./OrdersReady";
 import OrdersTimeline from "./OrdersTimeline";
 import OrdersTimeUp from "./OrdersTimeUp";
-import useChangeOrdersStatusOnInintialLoad from "./useChangeOrdersStatusOnInintialLoad";
 
 export default function MainScreen() {
   const [openOrders, setOpenOrders] = useState<OrderDetails[]>([]);
@@ -16,19 +17,19 @@ export default function MainScreen() {
   const [closedOrders, setClosedOrders] = useState<OrderDetails[]>([]);
 
   const changeOrdersStatusOnInintialLoad = useChangeOrdersStatusOnInintialLoad();
-
   useEffect(() => {
+    // Runs only once, when the app initializes. Queries all the open orders
+    // and updates the timing status. ie closes time out orders,
+    // or moves open orders to ready, depending on the time scale
+    // since app was last run.
     changeOrdersStatusOnInintialLoad();
-    console.log("hhhhhhh");
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     const q = query(collection(db, "orders"));
-
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let orders: OrderDetails[] = [];
-
       querySnapshot.forEach((doc) => {
         orders.push(doc.data() as OrderDetails);
       });
@@ -47,22 +48,29 @@ export default function MainScreen() {
     return () => unsubscribe();
   }, []);
 
+  const initial = { height: "auto" };
+  const animate = { height: "auto", opacity: 1 };
+  const transition = { duration: 4 };
+
+  const countOfOpenOrders = openOrders.length + timeUpOrders.length + readyOrders.length;
+
   return (
     <div className={styles["main-screen"]}>
-      <Header />
+      <Header countOfOpenOrders={countOfOpenOrders} />
       <div className={styles["orders-wrapper"]}>
         <OrdersTimeline openOrders={openOrders} countOfTimeUp={timeUpOrders.length} />
         <div className={styles["timeup-orders-wrapper"]}>
-          {timeUpOrders && timeUpOrders.map((order) => <OrdersTimeUp key={order.orderId} order={order} />)}
+          <AnimatePresence>{timeUpOrders && timeUpOrders.map((order) => <OrdersTimeUp key={order.orderId} order={order} />)}</AnimatePresence>
         </div>
         <div className={styles["ready-closed-sidebar"]}>
           <div className={styles["ready-orders-heading"]}>Ready orders</div>
-          <div className={styles["ready-list"]}>{readyOrders && readyOrders.map((order) => <OrdersReady key={order.orderId} order={order} />)}</div>
-
-          <div className={styles["closed-orders-sidebar"]}>
+          <div className={styles["ready-list"]}>
+            <AnimatePresence>{readyOrders && readyOrders.map((order) => <OrdersReady key={order.orderId} order={order} />)}</AnimatePresence>
+          </div>
+          <motion.div initial={initial} animate={animate} transition={transition} className={styles["closed-orders-sidebar"]}>
             <div className={styles["closed-orders-heading"]}>Closed orders</div>
             {closedOrders && closedOrders.map((order) => <OrdersClosed key={order.orderId} order={order} />)}
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

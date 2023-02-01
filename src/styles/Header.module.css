@@ -1,5 +1,5 @@
 .header-background {
-  background-color: var(--four);;
+  background-color: var(--four);
   height: 30px;
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@
   height: 25px;
   width: 200px;
   display: inline-block;
-  background-color: var(--three);;
+  background-color: var(--three);
   border-radius: 10px;
   margin-right: 10px;
   /* font-size: 3em; */
@@ -24,15 +24,25 @@
   height: 30px;
   width: 200px;
   display: inline-block;
-  background-color: var(--one);;
+  background-color: var(--one);
   border-radius: 10px 10px 0 0;
   border: 1px solid white;
-  border-bottom:none;
+  border-bottom: none;
   margin-right: 10px;
   /* font-size: 3em; */
-  color:black;
+  color: black;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.clock-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.order-count {
+  width: 200px;
 }

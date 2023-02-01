@@ -2,10 +2,11 @@ import { capitalize } from "lodash";
 import { useContext } from "react";
 import { stationContext } from "../context/StationContext";
 import styles from "../styles/Header.module.css";
+import Clock from "./Clock";
 
 const stations: Station[] = ["expeditor", "bar", "salad", "fry", "grill"];
 
-export default function Header() {
+export default function Header({ countOfOpenOrders }: { countOfOpenOrders: number }) {
   const { selectedStation, setSelectedStation } = useContext(stationContext);
 
   const handleStationSelect = (stationToChangeTo: Station) => {
@@ -25,6 +26,10 @@ export default function Header() {
           </div>
         );
       })}
+      <div className={styles["clock-container"]}>
+        <span className={styles["order-count"]}>{countOfOpenOrders} open orders</span>
+        <Clock />
+      </div>
     </header>
   );
 }

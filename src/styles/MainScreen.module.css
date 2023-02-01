@@ -145,6 +145,8 @@
 .single-order-header {
   background-color: white;
   border-radius: 20px 20px 0 0;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .order-timer {

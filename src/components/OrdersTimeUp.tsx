@@ -1,5 +1,5 @@
-// import { motion } from "framer-motion";
-import { useContext} from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useContext } from "react";
 import { useTimer } from "react-timer-hook";
 import { stationContext } from "../context/StationContext";
 import useFirestore from "../hooks/useFirestore";
@@ -35,14 +35,15 @@ export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
   //Starts the stopwatch from the moment the timer ends
   const swStartTime = new Date(order.timeTimeUp!);
 
-  // const initial = { color: "white" };
-  // const animate = { color: "black" };
-  // const transition = { repeat: Infinity, duration: 1 };
-// initial={initial} animate={animate} transition={transition}
+  // const initial = { opacity: 0 };
+  // const animate = { opacity: 1 };
+  const exit = { opacity: 0, scale: 0.9, x: 20, y: -50 };
+  const transition = { duration: 1 };
 
+  // initial={initial} animate={animate} exit={exit} transition={transition}
 
   return (
-    <div className={styles["single-order-timeUp"]}>
+    <motion.div exit={exit} transition={transition} className={styles["single-order-timeUp"]}>
       <Stopwatch startTime={swStartTime} />
       <span>
         Table {order.tableNumber}
@@ -60,24 +61,10 @@ export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
       <button className={styles["ready-button"]} onClick={handleOrderUpClick}>
         Order up
       </button>
-      <span>
-        {" "}
-        placed - 
-        {new Date(order.timeOrderPlaced!).toLocaleTimeString()}
-      </span>
-      <span>
-        {" "}
-        time up - 
-        {new Date(order.timeTimeUp!).toLocaleTimeString()}
-      </span>
-      <span>
-        {" "}
-        ready -
-        {new Date(order.timeReady!).toLocaleTimeString()}
-      </span>
+      <span> placed -{new Date(order.timeOrderPlaced!).toLocaleTimeString()}</span>
+      <span> time up -{new Date(order.timeTimeUp!).toLocaleTimeString()}</span>
+      <span> ready -{new Date(order.timeReady!).toLocaleTimeString()}</span>
       <span>{order.orderStatus}</span>
-
-    </div>
+    </motion.div>
   );
 }
-

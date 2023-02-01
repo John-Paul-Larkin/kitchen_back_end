@@ -1,6 +1,11 @@
 import { collection, doc, getDocs, query, where, writeBatch } from "firebase/firestore";
 import db from "../firebase/firebaseconfig";
 
+// Runs only once, when the app initializes. Queries all the open orders
+// and updates the timing status. ie closes time out orders,
+// or moves open orders to ready, depending on the time scale
+// since app was last run.
+
 export default function useChangeOrdersStatusOnInintialLoad() {
   function changeOrdersStatusOnInintialLoad(orders: OrderDetails[]) {
     const timeNow = new Date().getTime();

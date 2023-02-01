@@ -1,5 +1,7 @@
+import { motion } from "framer-motion";
 import { useContext } from "react";
 import { stationContext } from "../context/StationContext";
+import useFirestore from "../hooks/useFirestore";
 import styles from "../styles/MainScreen.module.css";
 import Items from "./Items";
 import Timer from "./Timer";
@@ -21,6 +23,12 @@ export default function OrdersPending({ order }: { order: orderDetailsWithGap })
 
   const timeOrderPlaced = new Date(order.timeOrderPlaced!).toLocaleTimeString().substring(0, 5);
 
+  // button which sets order status to ready
+  const sendFirestore = useFirestore();
+  const handleOrderUpClick = () => {
+    sendFirestore({ orderID: order.orderId, type: "setTimeUp", currentStatus: order.orderStatus });
+  };
+
   return (
     <div className={styles["single-order-pending"]} style={{ left: order.gapInPixels }}>
       <div className={styles["single-order-header"]}>
@@ -29,8 +37,8 @@ export default function OrdersPending({ order }: { order: orderDetailsWithGap })
         </div>
         <span className={styles["order-table"]}>
           <span>
-            <span>{order.tableNumber}</span>
-            <span >- {order.server} - </span>
+            <span>Table {order.tableNumber}</span>
+            <span> - {order.server} - </span>
             <span>{timeOrderPlaced}</span>
           </span>
         </span>
@@ -44,7 +52,9 @@ export default function OrdersPending({ order }: { order: orderDetailsWithGap })
             </div>
           );
         })}
-      <button className={styles["ready-button"]}>Order up</button>
+      <button className={styles["ready-button"]} onClick={handleOrderUpClick}>
+        Order up
+      </button>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import useFirestore from "../hooks/useFirestore";
@@ -7,7 +8,6 @@ import Stopwatch from "./Stopwatch";
 export default function OrdersReady({ order }: { order: OrderDetails }) {
   const fiveMinutes = 300000;
   const sendFirestore = useFirestore();
-
 
   // sets a timer which automatically moves the order status to closed after 5 minutes
   // if the user has not clicked the button
@@ -27,8 +27,13 @@ export default function OrdersReady({ order }: { order: OrderDetails }) {
   //Starts the stopwatch from the moment the timer ends
   const swStartTime = new Date(order.timeTimeUp!);
 
+  const initial = { opacity: 0, scale: 0.9, x: -20 };
+  const animate = { opacity: 1, scale: 1, x: 0 };
+  const exit = { opacity: 0, scale: 0.9, y: 30 };
+  const transition = { duration: 1 };
+
   return (
-    <div className={styles["single-order-ready"]}>
+    <motion.div exit={exit} transition={transition} initial={initial} animate={animate} className={styles["single-order-ready"]}>
       <Stopwatch startTime={swStartTime} />
       <span>
         Table {order.tableNumber}
@@ -38,7 +43,6 @@ export default function OrdersReady({ order }: { order: OrderDetails }) {
       <button className={styles["ready-button"]} onClick={handleOrderUpClick}>
         Order gone
       </button>
-      <span>{order.orderStatus}</span>
-    </div>
+    </motion.div>
   );
 }
