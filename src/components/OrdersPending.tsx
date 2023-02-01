@@ -19,17 +19,22 @@ export default function OrdersPending({ order }: { order: orderDetailsWithGap })
   const tenMinutes = 600000;
   const timerFinishTime = new Date(order.timeOrderPlaced! + tenMinutes);
 
+  const timeOrderPlaced = new Date(order.timeOrderPlaced!).toLocaleTimeString().substring(0, 5);
+
   return (
     <div className={styles["single-order-pending"]} style={{ left: order.gapInPixels }}>
-  
-  <div className={styles["single-order-header"]}>
-      <Timer finishTime={timerFinishTime} order={order} />
-      <span>
-        Table {order.tableNumber}
-        <span> - {order.server}</span>
-      </span>
+      <div className={styles["single-order-header"]}>
+        <div className={styles["order-timer"]}>
+          <Timer finishTime={timerFinishTime} order={order} />
+        </div>
+        <span className={styles["order-table"]}>
+          <span>
+            <span>{order.tableNumber}</span>
+            <span >- {order.server} - </span>
+            <span>{timeOrderPlaced}</span>
+          </span>
+        </span>
       </div>
-
 
       {order &&
         order.orderItemDetails.map((item) => {
@@ -40,14 +45,6 @@ export default function OrdersPending({ order }: { order: orderDetailsWithGap })
           );
         })}
       <button className={styles["ready-button"]}>Order up</button>
-      <span>
-        {" "}
-        placed - 
-        {new Date(order.timeOrderPlaced!).toLocaleTimeString()}
-      </span>
-
-
-      <span>{order.orderStatus}</span>
     </div>
   );
 }

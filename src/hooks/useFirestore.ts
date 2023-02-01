@@ -31,16 +31,15 @@ export default function useFirestore() {
           console.log(error);
         }
       }
-
-      // try {
-      //   await updateDoc(doc(db, "orders", input.orderID), {
-      //     orderStatus: "ready",
-      //     timeReady: new Date().getTime(),
-      //   });
-      //   console.log('sss')
-      // } catch (error) {
-      //   console.log(error);
-      // }
+    } else if (input.type === "setReady") {
+      try {
+        await updateDoc(doc(db, "orders", input.orderID), {
+          orderStatus: "ready",
+          timeReady: new Date().getTime(),
+        });
+      } catch (error) {
+        console.log(error);
+      }
     } else if (input.type === "setClosed") {
       try {
         await updateDoc(doc(db, "orders", input.orderID), {

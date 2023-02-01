@@ -30,7 +30,6 @@
   align-items: flex-start;
   justify-content: flex-end;
   padding-top: 50px;
-
 }
 
 .ready-closed-sidebar {
@@ -143,8 +142,20 @@
   box-shadow: 2px 2px 2px var(--one);
 }
 
-
 .single-order-header {
+  background-color: white;
+  border-radius: 20px 20px 0 0;
+}
 
-  background-color: blue;
+.order-timer {
+  font-size: 1.6em;
+  text-align: center;
+  padding: 5px;
+}
+
+.order-table {
+  font-size: 0.75em;
+  margin-left: 5px;
+  display: flex;
+  justify-content: space-around;
 }

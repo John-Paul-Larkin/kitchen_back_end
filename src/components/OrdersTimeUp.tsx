@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useContext, useEffect } from "react";
+// import { motion } from "framer-motion";
+import { useContext} from "react";
 import { useTimer } from "react-timer-hook";
 import { stationContext } from "../context/StationContext";
 import useFirestore from "../hooks/useFirestore";
@@ -10,14 +10,6 @@ import Stopwatch from "./Stopwatch";
 export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
   const sendFirestore = useFirestore();
   const fiveMinutes = 300000;
-
-  // useEffect(() => {
-  //   // on initial render, if order has been timeUp for more than five minutes, set the status to ready
-  //   const timeNow = new Date().getTime();
-  //   if (timeNow - order.timeTimeUp! > fiveMinutes) {
-  //     sendFirestore({ orderID: order.orderId, type: "setReady" });
-  //   }
-  // }, []);
 
   // sets a timer which automatically moves the order status to ready after 5 minutes
   // if the user has not clicked the button
@@ -46,6 +38,8 @@ export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
   // const initial = { color: "white" };
   // const animate = { color: "black" };
   // const transition = { repeat: Infinity, duration: 1 };
+// initial={initial} animate={animate} transition={transition}
+
 
   return (
     <div className={styles["single-order-timeUp"]}>
@@ -87,4 +81,3 @@ export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
   );
 }
 
-// initial={initial} animate={animate} transition={transition}
