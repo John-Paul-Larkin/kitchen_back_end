@@ -8,13 +8,6 @@ export default function OrdersReady({ order }: { order: OrderDetails }) {
   const fiveMinutes = 300000;
   const sendFirestore = useFirestore();
 
-  // useEffect(() => {
-  //   // on initial render, if order has been timeUp for more than five minutes, set the status to ready
-  //   const timeNow = new Date().getTime();
-  //   if (timeNow - order.timeReady! > fiveMinutes) {
-  //     sendFirestore({ orderID: order.orderId, type: "setClosed" });
-  //   }
-  // }, []);
 
   // sets a timer which automatically moves the order status to closed after 5 minutes
   // if the user has not clicked the button
@@ -45,6 +38,7 @@ export default function OrdersReady({ order }: { order: OrderDetails }) {
       <button className={styles["ready-button"]} onClick={handleOrderUpClick}>
         Order gone
       </button>
+      <span>{order.orderStatus}</span>
     </div>
   );
 }

@@ -1,0 +1,47 @@
+// if (order.orderStatus === "pending") {
+//   if (timeNow - order.timeOrderPlaced! > twentyMinutes) {
+//     //set time out - ready and closed
+//     batch.update(docRef, {
+//       orderStatus: "closed",
+//       timeTimeUp: timeNow,
+//       timeReady: timeNow,
+//       timeClosed: timeNow,
+//     });
+//   } else if (timeNow - order.timeOrderPlaced! > fifteenMinutes) {
+//     //set time out - ready
+//     batch.update(docRef, {
+//       orderStatus: "ready",
+//       timeTimeUp: timeNow,
+//       timeReady: timeNow,
+//     });
+//   } else if (timeNow - order.timeOrderPlaced! > tenMinutes) {
+//     //set time out
+//     batch.update(docRef, {
+//       orderStatus: "time up",
+//       timeTimeUp: timeNow,
+//     });
+//   }
+// } else if (order.orderStatus === "time up") {
+//   if (timeNow - order.timeTimeUp! > tenMinutes) {
+//     //set ready and closed
+//     batch.update(docRef, {
+//       orderStatus: "closed",
+//       timeReady: timeNow,
+//       timeClosed: timeNow,
+//     });
+//   } else if (timeNow - order.timeTimeUp! > fiveMinutes) {
+//     //set ready
+//     batch.update(docRef, {
+//       orderStatus: "ready",
+//       timeReady: timeNow,
+//     });
+//   }
+// } else if (order.orderStatus === "ready") {
+//   if (timeNow - order.timeReady! > fiveMinutes) {
+//     // set closed
+//     batch.update(docRef, {
+//       orderStatus: "closed",
+//       timeClosed: timeNow,
+//     });
+//   }
+// }

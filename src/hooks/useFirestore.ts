@@ -16,8 +16,7 @@ interface FireSetTimeUp {
   currentStatus: OrderStatus;
 }
 
-
-type Firestore = FireSetTimeUp | FireSetReadyStatus | FireSetClosedStatus 
+type Firestore = FireSetTimeUp | FireSetReadyStatus | FireSetClosedStatus;
 
 export default function useFirestore() {
   const sendFirestore = async (input: Firestore) => {
@@ -32,15 +31,16 @@ export default function useFirestore() {
           console.log(error);
         }
       }
-  
-      try {
-        await updateDoc(doc(db, "orders", input.orderID), {
-          orderStatus: "ready",
-          timeReady: new Date().getTime(),
-        });
-      } catch (error) {
-        console.log(error);
-      }
+
+      // try {
+      //   await updateDoc(doc(db, "orders", input.orderID), {
+      //     orderStatus: "ready",
+      //     timeReady: new Date().getTime(),
+      //   });
+      //   console.log('sss')
+      // } catch (error) {
+      //   console.log(error);
+      // }
     } else if (input.type === "setClosed") {
       try {
         await updateDoc(doc(db, "orders", input.orderID), {

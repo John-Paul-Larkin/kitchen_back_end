@@ -68,6 +68,11 @@ export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
       </button>
       <span>
         {" "}
+        placed - 
+        {new Date(order.timeOrderPlaced!).toLocaleTimeString()}
+      </span>
+      <span>
+        {" "}
         time up - 
         {new Date(order.timeTimeUp!).toLocaleTimeString()}
       </span>
@@ -76,6 +81,8 @@ export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
         ready -
         {new Date(order.timeReady!).toLocaleTimeString()}
       </span>
+      <span>{order.orderStatus}</span>
+
     </div>
   );
 }
