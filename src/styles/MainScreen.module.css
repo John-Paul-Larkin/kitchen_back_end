@@ -59,7 +59,6 @@
   margin-top: 10px;
   font-weight: 600;
   cursor: pointer;
-  color:
 }
 
 .ingredients-wrapper {
@@ -80,9 +79,7 @@
   border-radius: 20px;
   margin: 2px;
   width: 180px;
-
 }
-
 
 .item {
   background-color: blue;
@@ -165,4 +162,23 @@
   margin-left: 5px;
   display: flex;
   justify-content: space-around;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: relative;
+  left: 18px;
+  top: 17px;
+  border: 0.5px solid black;
+}
+
+.dot-time-up {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: relative;
+
+  border: 0.5px solid black;
 }

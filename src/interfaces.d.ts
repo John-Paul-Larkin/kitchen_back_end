@@ -65,6 +65,6 @@ interface ContextProvider {
 }
 
 interface MultipleTable {
-  table: string;
+  tableNumber: string;
   color: string;
 }

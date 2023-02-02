@@ -15,7 +15,7 @@ export default function MainScreen() {
   const [timeUpOrders, setTimeUpOrders] = useState<OrderDetails[]>([]);
   const [readyOrders, setReadyOrders] = useState<OrderDetails[]>([]);
   const [closedOrders, setClosedOrders] = useState<OrderDetails[]>([]);
-  const [tableMultipleOrders, setTableMultipleOrders] = useState<MultipleTable[]>([]);
+  const [tablesWithMultipleOrders, settablesWithMultipleOrders] = useState<MultipleTable[]>([]);
 
   const changeOrdersStatusOnInintialLoad = useChangeOrdersStatusOnInintialLoad();
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function MainScreen() {
       setTimeUpOrders([...timeUp]);
       setReadyOrders([...ready]);
       setClosedOrders([...closed]);
-      setTableMultipleOrders(checkForMultipleOrdersOnSingleTable({ orders }));
+      settablesWithMultipleOrders(checkForMultipleOrdersOnSingleTable({ orders }));
     });
 
     return () => unsubscribe();
@@ -56,15 +56,15 @@ export default function MainScreen() {
 
   const countOfOpenOrders = openOrders.length + timeUpOrders.length + readyOrders.length;
 
-  console.log(tableMultipleOrders);
+  console.log(tablesWithMultipleOrders);
 
   return (
     <div className={styles["main-screen"]}>
       <Header countOfOpenOrders={countOfOpenOrders} />
       <div className={styles["orders-wrapper"]}>
-        <OrdersTimeline openOrders={openOrders} countOfTimeUp={timeUpOrders.length} />
+        <OrdersTimeline openOrders={openOrders} countOfTimeUp={timeUpOrders.length} tablesWithMultipleOrders={tablesWithMultipleOrders} />
         <div className={styles["timeup-orders-wrapper"]}>
-          <AnimatePresence>{timeUpOrders && timeUpOrders.map((order) => <OrdersTimeUp key={order.orderId} order={order} />)}</AnimatePresence>
+          <AnimatePresence>{timeUpOrders && timeUpOrders.map((order) => <OrdersTimeUp tablesWithMultipleOrders={tablesWithMultipleOrders} key={order.orderId} order={order} />)}</AnimatePresence>
         </div>
         <div className={styles["ready-closed-sidebar"]}>
           <div className={styles["ready-orders-heading"]}>Ready orders</div>
@@ -87,7 +87,7 @@ function checkForMultipleOrdersOnSingleTable({ orders }: { orders: OrderDetails[
 
   let tables = orders.filter((order) => order.orderStatus !== "closed").map((order) => order.tableNumber);
   const tableSet = new Set<string>();
-  const colors = ["red", "blue", "green", "yellow", "white", "orange", "pink", "brown", "coral", "cyan"];
+  const colors = ["yellow", "red", "blue", "green", "white", "orange", "pink", "brown", "coral", "cyan"];
 
   tables.sort().forEach((tableNumber, index, arr) => {
     if (index < arr.length && tableNumber === arr[index + 1]) {
@@ -97,7 +97,7 @@ function checkForMultipleOrdersOnSingleTable({ orders }: { orders: OrderDetails[
 
   return [...Array.from(tableSet)].map((tableNumber, index) => {
     return {
-      table: tableNumber,
+      tableNumber: tableNumber,
       color: colors[index],
     };
   });

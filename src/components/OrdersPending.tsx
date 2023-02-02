@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { stationContext } from "../context/StationContext";
 import useFirestore from "../hooks/useFirestore";
 import styles from "../styles/MainScreen.module.css";
@@ -10,8 +9,15 @@ interface orderDetailsWithGap extends OrderDetails {
   gapInPixels: number;
 }
 
-export default function OrdersPending({ order }: { order: orderDetailsWithGap }) {
+export default function OrdersPending({
+  order,
+  tablesWithMultipleOrders,
+}: {
+  order: orderDetailsWithGap;
+  tablesWithMultipleOrders: MultipleTable[];
+}) {
   const { selectedStation } = useContext(stationContext);
+
   let itemsToDisplay = order.orderItemDetails;
 
   // Sorts the order to display a particular stations items at the top
@@ -33,13 +39,8 @@ export default function OrdersPending({ order }: { order: orderDetailsWithGap })
     });
   }
 
-  // order.orderItemDetails.sort((a, b) => {
-  //   return Number(b.station === selectedStation) - Number(a.station === selectedStation);
-  // });
-
   const tenMinutes = 600000;
   const timerFinishTime = new Date(order.timeOrderPlaced! + tenMinutes);
-
   const timeOrderPlaced = new Date(order.timeOrderPlaced!).toLocaleTimeString().substring(0, 5);
 
   // button which sets order status to ready
@@ -48,32 +49,55 @@ export default function OrdersPending({ order }: { order: orderDetailsWithGap })
     sendFirestore({ orderID: order.orderId, type: "setTimeUp", currentStatus: order.orderStatus });
   };
 
-  return (
-    <div className={styles["single-order-pending"]} style={{ left: order.gapInPixels }}>
-      <div className={styles["single-order-header"]}>
-        <div className={styles["order-timer"]}>
-          <Timer finishTime={timerFinishTime} order={order} />
-        </div>
-        <span className={styles["order-table"]}>
-          <span>
-            <span>Table {order.tableNumber}</span>
-            <span> - {order.server} - </span>
-            <span>{timeOrderPlaced}</span>
-          </span>
-        </span>
-      </div>
+  // if this is order is on a table with mutiple orders
+  // display a colored dot identifying it as such
+  let isMultipleTables = false;
+  let multipleTableDotColor = "";
+  tablesWithMultipleOrders.forEach((table) => {
+    if (table.tableNumber === order.tableNumber) {
+      isMultipleTables = true;
+      multipleTableDotColor = table.color;
+    }
+  });
 
-      {itemsToDisplay &&
-        itemsToDisplay.map((item) => {
-          return (
-            <div key={item.itemId}>
-              <Items item={item} />
+  return (
+    <>
+      {itemsToDisplay.length > 0 && (
+        <div className={styles["single-order-pending"]} style={{ left: order.gapInPixels }}>
+          <div className={styles["single-order-header"]}>
+            <div className={styles["order-timer"]}>
+              {isMultipleTables && (
+                <div
+                  className={styles["dot"]}
+                  style={{
+                    backgroundColor: multipleTableDotColor,
+                  }}
+                ></div>
+              )}
+              <Timer finishTime={timerFinishTime} order={order} />
             </div>
-          );
-        })}
-      <button className={styles["ready-button"]} onClick={handleOrderUpClick}>
-        Order up
-      </button>
-    </div>
+            <span className={styles["order-table"]}>
+              <span>
+                <span>Table {order.tableNumber}</span>
+                <span> - {order.server} - </span>
+                <span>{timeOrderPlaced}</span>
+              </span>
+            </span>
+          </div>
+          {itemsToDisplay &&
+            itemsToDisplay.map((item) => {
+              return (
+                <div key={item.itemId}>
+                  {" "}
+                  <Items item={item} />
+                </div>
+              );
+            })}
+          <button className={styles["ready-button"]} onClick={handleOrderUpClick}>
+            Order up
+          </button>
+        </div>
+      )}
+    </>
   );
 }

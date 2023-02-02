@@ -7,7 +7,7 @@ import styles from "../styles/MainScreen.module.css";
 import Items from "./Items";
 import Stopwatch from "./Stopwatch";
 
-export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
+export default function OrdersTimeUp({ order, tablesWithMultipleOrders }: { order: OrderDetails; tablesWithMultipleOrders: MultipleTable[] }) {
   const sendFirestore = useFirestore();
   const fiveMinutes = 300000;
 
@@ -21,11 +21,28 @@ export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
     },
   });
 
-  // Sorts the order to display a particular stations items at the top
   const { selectedStation } = useContext(stationContext);
-  order.orderItemDetails.sort((a, b) => {
-    return Number(b.station === selectedStation) - Number(a.station === selectedStation);
-  });
+
+  let itemsToDisplay = order.orderItemDetails;
+
+  // Sorts the order to display a particular stations items at the top
+  // no bar items on kitchen docket
+  // no food items on bar docket
+
+  if (selectedStation === "bar") {
+    itemsToDisplay = itemsToDisplay.filter((item) => item.station === "bar");
+  } else if (selectedStation !== "expeditor") {
+    itemsToDisplay = itemsToDisplay.filter((item) => item.station !== "bar");
+    // Sorts the order to display a particular stations items at the top
+    itemsToDisplay.sort((a, b) => {
+      return Number(b.station === selectedStation) - Number(a.station === selectedStation);
+    });
+  } else if (selectedStation === "expeditor") {
+    itemsToDisplay.sort((a, b) => {
+      //display drinks at the bottom for the expeditor
+      return Number(a.station === "bar") - Number(b.station === "bar");
+    });
+  }
 
   // button which sets order status to ready
   const handleOrderUpClick = () => {
@@ -42,31 +59,50 @@ export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
   // const transition2 = { duration: 0.1 };
   const transition = { height: { duration: 2 }, width: { duration: 2 }, opacity: { duration: 0.25 } };
 
+  // if this is order is on a table with mutiple orders
+  // display a colored dot identifying it as such
+  let isMultipleTables = false;
+  let multipleTableDotColor = "";
+  tablesWithMultipleOrders.forEach((table) => {
+    if (table.tableNumber === order.tableNumber) {
+      isMultipleTables = true;
+      multipleTableDotColor = table.color;
+    }
+  });
+
   // initial={initial} animate={animate} exit={exit} transition={transition}
 
   return (
-    <motion.div exit={exit} transition={transition} className={styles["single-order-timeUp"]}>
-      <Stopwatch startTime={swStartTime} />
-      <span>
-        Table {order.tableNumber}
-        <span> - {order.server}</span>
-      </span>
+    <>
+      {itemsToDisplay.length > 0 && (
+        <motion.div exit={exit} transition={transition} className={styles["single-order-timeUp"]}>
+          {isMultipleTables && (
+            <div
+              className={styles["dot-time-up"]}
+              style={{
+                backgroundColor: multipleTableDotColor,
+              }}
+            ></div>
+          )}
+          <Stopwatch startTime={swStartTime} />
+          <span>
+            Table {order.tableNumber}
+            <span> - {order.server}</span>
+          </span>
 
-      {order &&
-        order.orderItemDetails.map((item) => {
-          return (
-            <div key={item.itemId}>
-              <Items item={item} />
-            </div>
-          );
-        })}
-      <button className={styles["ready-button"]} onClick={handleOrderUpClick}>
-        Order up
-      </button>
-      <span> placed -{new Date(order.timeOrderPlaced!).toLocaleTimeString()}</span>
-      <span> time up -{new Date(order.timeTimeUp!).toLocaleTimeString()}</span>
-      <span> ready -{new Date(order.timeReady!).toLocaleTimeString()}</span>
-      <span>{order.orderStatus}</span>
-    </motion.div>
+          {itemsToDisplay &&
+            itemsToDisplay.map((item) => {
+              return (
+                <div key={item.itemId}>
+                  <Items item={item} />
+                </div>
+              );
+            })}
+          <button className={styles["ready-button"]} onClick={handleOrderUpClick}>
+            Order up
+          </button>
+        </motion.div>
+      )}
+    </>
   );
 }

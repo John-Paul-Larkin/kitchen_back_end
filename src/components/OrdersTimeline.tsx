@@ -2,7 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import styles from "../styles/MainScreen.module.css";
 import OrdersPending from "./OrdersPending";
 
-export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrders: OrderDetails[]; countOfTimeUp: number }) {
+export default function OrdersTimeline({
+  openOrders,
+  countOfTimeUp,
+  tablesWithMultipleOrders,
+}: {
+  openOrders: OrderDetails[];
+  countOfTimeUp: number;
+  tablesWithMultipleOrders: MultipleTable[];
+}) {
   const containerRef = useRef<HTMLInputElement | null>(null);
 
   const widthOfTimeUpContainer = countOfTimeUp * 190;
@@ -43,7 +51,7 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
   }, [openOrders, remainingSpace]);
 
   useEffect(() => {
-    const widthOfReadySidePanel100px = 0; //Nescessary????????????????????
+    const widthOfReadySidePanel100px = 0; //Necessary????????????????????
 
     const handleResize = () => {
       if (containerRef.current?.clientWidth) {
@@ -73,7 +81,10 @@ export default function OrdersTimeline({ openOrders, countOfTimeUp }: { openOrde
 
   return (
     <div ref={containerRef} className={styles["open-orders-wrapper"]}>
-      <div>{openOrdersWithGap && openOrdersWithGap.map((order) => <OrdersPending key={order.orderId} order={order} />)}</div>
+      <div>
+        {openOrdersWithGap &&
+          openOrdersWithGap.map((order) => <OrdersPending key={order.orderId} order={order} tablesWithMultipleOrders={tablesWithMultipleOrders} />)}
+      </div>
     </div>
   );
 }
