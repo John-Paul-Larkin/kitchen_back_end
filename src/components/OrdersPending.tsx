@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { stationContext } from "../context/StationContext";
 import useFirestore from "../hooks/useFirestore";
 import styles from "../styles/MainScreen.module.css";

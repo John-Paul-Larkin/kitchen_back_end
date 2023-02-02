@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import useFirestore from "../hooks/useFirestore";
 import styles from "../styles/MainScreen.module.css";
