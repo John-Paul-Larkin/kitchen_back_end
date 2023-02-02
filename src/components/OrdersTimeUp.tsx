@@ -37,8 +37,10 @@ export default function OrdersTimeUp({ order }: { order: OrderDetails }) {
 
   // const initial = { opacity: 0 };
   // const animate = { opacity: 1 };
-  const exit = { opacity: 0, scale: 0.9, x: 20, y: -50 };
-  const transition = { duration: 1 };
+  const exit = { opacity: 0, x: 50, height: 120, width: 90 };
+  // const transition = { duration: 3 };
+  // const transition2 = { duration: 0.1 };
+  const transition = { height: { duration: 2 }, width: { duration: 2 }, opacity: { duration: 0.25 } };
 
   // initial={initial} animate={animate} exit={exit} transition={transition}
 

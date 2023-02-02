@@ -10,7 +10,7 @@ interface OrderDetails {
   timeClosed: number | null;
 }
 
-type OrderStatus =  "pending" | "time up" | "ready" | "closed";
+type OrderStatus = "pending" | "time up" | "ready" | "closed";
 
 type Station = "bar" | "salad" | "fry" | "grill" | "expeditor";
 
@@ -62,4 +62,9 @@ type Ingredient =
 interface ContextProvider {
   selectedStation: Station;
   setSelectedStation: React.Dispatch<React.SetStateAction<Station>>;
+}
+
+interface MultipleTable {
+  table: string;
+  color: string;
 }

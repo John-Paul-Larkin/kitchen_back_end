@@ -15,12 +15,13 @@ export default function MainScreen() {
   const [timeUpOrders, setTimeUpOrders] = useState<OrderDetails[]>([]);
   const [readyOrders, setReadyOrders] = useState<OrderDetails[]>([]);
   const [closedOrders, setClosedOrders] = useState<OrderDetails[]>([]);
+  const [tableMultipleOrders, setTableMultipleOrders] = useState<MultipleTable[]>([]);
 
   const changeOrdersStatusOnInintialLoad = useChangeOrdersStatusOnInintialLoad();
   useEffect(() => {
     // Runs only once, when the app initializes. Queries all the open orders
     // and updates the timing status. ie closes time out orders,
-    // or moves open orders to ready, depending on the time scale
+    // or moves open orders to ready, depending on the elapsed time
     // since app was last run.
     changeOrdersStatusOnInintialLoad();
     // eslint-disable-next-line
@@ -43,6 +44,7 @@ export default function MainScreen() {
       setTimeUpOrders([...timeUp]);
       setReadyOrders([...ready]);
       setClosedOrders([...closed]);
+      setTableMultipleOrders(checkForMultipleOrdersOnSingleTable({ orders }));
     });
 
     return () => unsubscribe();
@@ -53,6 +55,8 @@ export default function MainScreen() {
   const transition = { duration: 4 };
 
   const countOfOpenOrders = openOrders.length + timeUpOrders.length + readyOrders.length;
+
+  console.log(tableMultipleOrders);
 
   return (
     <div className={styles["main-screen"]}>
@@ -75,4 +79,26 @@ export default function MainScreen() {
       </div>
     </div>
   );
+}
+
+function checkForMultipleOrdersOnSingleTable({ orders }: { orders: OrderDetails[] }) {
+  // iterates through all the open orders, finds tables which have multiple orders
+  // and for each table returns an object with the table number and a colour
+
+  let tables = orders.filter((order) => order.orderStatus !== "closed").map((order) => order.tableNumber);
+  const tableSet = new Set<string>();
+  const colors = ["red", "blue", "green", "yellow", "white", "orange", "pink", "brown", "coral", "cyan"];
+
+  tables.sort().forEach((tableNumber, index, arr) => {
+    if (index < arr.length && tableNumber === arr[index + 1]) {
+      tableSet.add(tableNumber);
+    }
+  });
+
+  return [...Array.from(tableSet)].map((tableNumber, index) => {
+    return {
+      table: tableNumber,
+      color: colors[index],
+    };
+  });
 }

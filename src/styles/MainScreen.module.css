@@ -29,7 +29,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-top: 50px;
+  padding-top: 35px;
 }
 
 .ready-closed-sidebar {
@@ -48,6 +48,8 @@
   padding: 0.4em;
   border-radius: 20px;
   margin: 5px;
+  height: 120px;
+  width: 90px;
 }
 
 .ready-button {
@@ -57,6 +59,7 @@
   margin-top: 10px;
   font-weight: 600;
   cursor: pointer;
+  color:
 }
 
 .ingredients-wrapper {
@@ -77,7 +80,9 @@
   border-radius: 20px;
   margin: 2px;
   width: 180px;
+
 }
+
 
 .item {
   background-color: blue;

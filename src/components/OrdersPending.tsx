@@ -12,11 +12,30 @@ interface orderDetailsWithGap extends OrderDetails {
 
 export default function OrdersPending({ order }: { order: orderDetailsWithGap }) {
   const { selectedStation } = useContext(stationContext);
+  let itemsToDisplay = order.orderItemDetails;
 
   // Sorts the order to display a particular stations items at the top
-  order.orderItemDetails.sort((a, b) => {
-    return Number(b.station === selectedStation) - Number(a.station === selectedStation);
-  });
+  // no bar items on kitchen docket
+  // no food items on bar docket
+
+  if (selectedStation === "bar") {
+    itemsToDisplay = itemsToDisplay.filter((item) => item.station === "bar");
+  } else if (selectedStation !== "expeditor") {
+    itemsToDisplay = itemsToDisplay.filter((item) => item.station !== "bar");
+    // Sorts the order to display a particular stations items at the top
+    itemsToDisplay.sort((a, b) => {
+      return Number(b.station === selectedStation) - Number(a.station === selectedStation);
+    });
+  } else if (selectedStation === "expeditor") {
+    itemsToDisplay.sort((a, b) => {
+      //display drinks at the bottom for the expeditor
+      return Number(a.station === "bar") - Number(b.station === "bar");
+    });
+  }
+
+  // order.orderItemDetails.sort((a, b) => {
+  //   return Number(b.station === selectedStation) - Number(a.station === selectedStation);
+  // });
 
   const tenMinutes = 600000;
   const timerFinishTime = new Date(order.timeOrderPlaced! + tenMinutes);
@@ -44,8 +63,8 @@ export default function OrdersPending({ order }: { order: orderDetailsWithGap })
         </span>
       </div>
 
-      {order &&
-        order.orderItemDetails.map((item) => {
+      {itemsToDisplay &&
+        itemsToDisplay.map((item) => {
           return (
             <div key={item.itemId}>
               <Items item={item} />
