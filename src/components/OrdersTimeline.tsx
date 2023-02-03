@@ -51,7 +51,7 @@ export default function OrdersTimeline({
   }, [openOrders, remainingSpace]);
 
   useEffect(() => {
-    const widthOfReadySidePanel100px = 0; //Necessary??????????????
+    const widthOfReadySidePanel100px = 0; //Necessary?????????????? test on master
 
     const handleResize = () => {
       if (containerRef.current?.clientWidth) {
