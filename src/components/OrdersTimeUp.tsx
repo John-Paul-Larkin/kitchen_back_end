@@ -26,8 +26,7 @@ export default function OrdersTimeUp({ order, tablesWithMultipleOrders }: { orde
   let itemsToDisplay = order.orderItemDetails;
 
   // Sorts the order to display a particular stations items at the top
-  // no bar items on kitchen docket
-  // no food items on bar docket
+  // no bar items on kitchen docket - no food items on bar docket etc
 
   if (selectedStation === "bar") {
     itemsToDisplay = itemsToDisplay.filter((item) => item.station === "bar");
