@@ -12,6 +12,6 @@ export default function Clock() {
     return function cleanup() {
       clearInterval(timerId);
     };
-  }, []);
+  }, [])
   return <span>{date.toLocaleTimeString()}</span>;
 }
