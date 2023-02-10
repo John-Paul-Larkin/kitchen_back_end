@@ -46,7 +46,9 @@ export default function OrdersPending({
   // button which sets order status to ready
   const sendFirestore = useFirestore();
   const handleOrderUpClick = () => {
-    sendFirestore({ orderID: order.orderId, type: "setTimeUp", currentStatus: order.orderStatus });
+    sendFirestore({ orderID: order.orderId, type: "setReadyFromPending" });
+
+    // sendFirestore({ orderID: order.orderId, type: "setTimeUp", currentStatus: order.orderStatus });
   };
 
   // if this is order is on a table with mutiple orders

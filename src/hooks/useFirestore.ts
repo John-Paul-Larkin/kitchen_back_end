@@ -10,13 +10,19 @@ interface FireSetReadyStatus {
   orderID: string;
   type: "setReady";
 }
+
+interface FireSetReadyFromPending {
+  orderID: string;
+  type: "setReadyFromPending";
+}
+
 interface FireSetTimeUp {
   orderID: string;
   type: "setTimeUp";
   currentStatus: OrderStatus;
 }
 
-type Firestore = FireSetTimeUp | FireSetReadyStatus | FireSetClosedStatus;
+type Firestore = FireSetTimeUp | FireSetReadyStatus | FireSetClosedStatus | FireSetReadyFromPending;
 
 export default function useFirestore() {
   const sendFirestore = async (input: Firestore) => {
@@ -35,6 +41,16 @@ export default function useFirestore() {
       try {
         await updateDoc(doc(db, "orders", input.orderID), {
           orderStatus: "ready",
+          timeReady: new Date().getTime(),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (input.type === "setReadyFromPending") {
+      try {
+        await updateDoc(doc(db, "orders", input.orderID), {
+          orderStatus: "ready",
+          timeTimeUp: new Date().getTime(),
           timeReady: new Date().getTime(),
         });
       } catch (error) {
