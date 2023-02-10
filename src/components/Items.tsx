@@ -5,11 +5,22 @@ import styles from "../styles/MainScreen.module.css";
 export default function Items({ item }: { item: MenuItem }) {
   const { selectedStation } = useContext(stationContext);
 
-  const ingredientsNotSelected = item.ingredients.filter((item) => item.selected === false);
-  const ingredientsSelected = item.ingredients.filter((item) => item.selected === true && item.added !== true);
-  const ingredientsAdded = item.ingredients.filter((item) => item.added === true);
-  const ingredientsEdited = item.ingredients.filter((item) => item.edited === true);
-  // className={ingredient.edited ? "line-through" : undefined}
+  // The following sorts the items ingredients, and seperates them into selected, not selected and added.
+  // They then have line struck through them if they have been edited.
+
+  const ingredientsSelected = item.ingredients.filter(
+    (ingredient) =>
+      (ingredient.selected === true && ingredient.added !== true) ||
+      (ingredient.selected === false && ingredient.added !== true && ingredient.edited === true)
+  );
+
+  const ingredientsNotSelected = item.ingredients.filter(
+    (ingredient) => ingredient.selected === false || (ingredient.selected === true && ingredient.edited === true)
+  );
+
+  const ingredientsAdded = item.ingredients.filter(
+    (ingredient) => (ingredient.added === true && ingredient.edited === true) || ingredient.added === true
+  );
 
   return (
     <div>
@@ -18,7 +29,10 @@ export default function Items({ item }: { item: MenuItem }) {
         {ingredientsSelected &&
           ingredientsSelected.map((ingredient) => {
             return (
-              <div key={ingredient.ingredientId}>
+              <div
+                key={ingredient.ingredientId}
+                className={styles[`${ingredient.edited ? (ingredient.selected ? undefined : "line-through") : undefined}`]}
+              >
                 <span> {ingredient.ingredient} </span>
               </div>
             );
@@ -27,7 +41,14 @@ export default function Items({ item }: { item: MenuItem }) {
         {ingredientsNotSelected.length > 0 && (
           <div className={styles["not-selected"]}>
             {ingredientsNotSelected.map((ingredient) => {
-              return <div key={ingredient.ingredientId}>No {ingredient.ingredient}</div>;
+              return (
+                <div
+                  key={ingredient.ingredientId}
+                  className={styles[`${ingredient.edited ? (ingredient.selected ? "line-through" : undefined) : undefined}`]}
+                >
+                  No {ingredient.ingredient}
+                </div>
+              );
             })}
           </div>
         )}
@@ -35,18 +56,20 @@ export default function Items({ item }: { item: MenuItem }) {
         {ingredientsAdded.length > 0 && (
           <div className={styles["added"]}>
             {ingredientsAdded.map((ingredient) => {
-              return <div key={ingredient.ingredientId}>Add {ingredient.ingredient}</div>;
+              return (
+                <div
+                  key={ingredient.ingredientId}
+                  className={
+                    styles[`${ingredient.edited ? (ingredient.added ? (ingredient.selected ? undefined : "line-through") : undefined) : undefined}`]
+                  }
+                >
+                  Add {ingredient.ingredient}
+                </div>
+              );
             })}
           </div>
         )}
       </div>
-      {ingredientsEdited.length > 0 && (
-        <div>
-          {ingredientsEdited.map((ingredient) => {
-            return <div key={ingredient.ingredientId}>{ingredient.ingredient}</div>;
-          })}
-        </div>
-      )}
     </div>
   );
 }
