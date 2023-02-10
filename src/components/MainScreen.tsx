@@ -19,10 +19,8 @@ export default function MainScreen() {
 
   const changeOrdersStatusOnInintialLoad = useChangeOrdersStatusOnInintialLoad();
   useEffect(() => {
-    // Runs only once, when the app initializes. Queries all the open orders
-    // and updates the timing status. ie closes time out orders,
-    // or moves open orders to ready, depending on the elapsed time
-    // since app was last run.
+    // Queries all the open orders and updates the timing status. ie closes time out orders,
+    // or moves open orders to ready, depending on the elapsed time since app was last run.
     changeOrdersStatusOnInintialLoad();
     // eslint-disable-next-line
   }, []);
@@ -64,7 +62,10 @@ export default function MainScreen() {
       <div className={styles["orders-wrapper"]}>
         <OrdersTimeline openOrders={openOrders} countOfTimeUp={timeUpOrders.length} tablesWithMultipleOrders={tablesWithMultipleOrders} />
         <div className={styles["timeup-orders-wrapper"]}>
-          <AnimatePresence>{timeUpOrders && timeUpOrders.map((order) => <OrdersTimeUp tablesWithMultipleOrders={tablesWithMultipleOrders} key={order.orderId} order={order} />)}</AnimatePresence>
+          <AnimatePresence>
+            {timeUpOrders &&
+              timeUpOrders.map((order) => <OrdersTimeUp tablesWithMultipleOrders={tablesWithMultipleOrders} key={order.orderId} order={order} />)}
+          </AnimatePresence>
         </div>
         <div className={styles["ready-closed-sidebar"]}>
           <div className={styles["ready-orders-heading"]}>Ready orders</div>

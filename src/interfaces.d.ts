@@ -21,13 +21,16 @@ interface MenuItem {
   ingredients: Ingredients[];
   isSentToKitchen?: boolean;
   station: Station;
-  // orderID?: string;
+  edited:boolean;
+  
 }
 interface Ingredients {
   ingredient: Ingredient;
   selected: boolean;
   added?: boolean;
   ingredientId?: string;
+  edited:boolean;
+
 }
 
 type Ingredient =

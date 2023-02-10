@@ -8,6 +8,8 @@ export default function Items({ item }: { item: MenuItem }) {
   const ingredientsNotSelected = item.ingredients.filter((item) => item.selected === false);
   const ingredientsSelected = item.ingredients.filter((item) => item.selected === true && item.added !== true);
   const ingredientsAdded = item.ingredients.filter((item) => item.added === true);
+  const ingredientsEdited = item.ingredients.filter((item) => item.edited === true);
+  // className={ingredient.edited ? "line-through" : undefined}
 
   return (
     <div>
@@ -38,6 +40,13 @@ export default function Items({ item }: { item: MenuItem }) {
           </div>
         )}
       </div>
+      {ingredientsEdited.length > 0 && (
+        <div>
+          {ingredientsEdited.map((ingredient) => {
+            return <div key={ingredient.ingredientId}>{ingredient.ingredient}</div>;
+          })}
+        </div>
+      )}
     </div>
   );
 }
