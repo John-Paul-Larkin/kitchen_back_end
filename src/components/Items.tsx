@@ -5,26 +5,23 @@ import styles from "../styles/MainScreen.module.css";
 export default function Items({ item }: { item: MenuItem }) {
   const { selectedStation } = useContext(stationContext);
 
-  // The following sorts the items ingredients, and seperates them into selected, not selected and added.
-  // They then have line struck through them if they have been edited.
-
+  // Sorts the items ingredients, and seperates them into selected, not selected and added.
+  // edited items will display with a strike through line
   const ingredientsSelected = item.ingredients.filter(
     (ingredient) =>
       (ingredient.selected === true && ingredient.added !== true) ||
       (ingredient.selected === false && ingredient.added !== true && ingredient.edited === true)
   );
-
   const ingredientsNotSelected = item.ingredients.filter(
     (ingredient) => ingredient.selected === false || (ingredient.selected === true && ingredient.edited === true)
   );
-
   const ingredientsAdded = item.ingredients.filter(
     (ingredient) => (ingredient.added === true && ingredient.edited === true) || ingredient.added === true
   );
 
   return (
     <div>
-      <div className={styles[`${item.station === selectedStation ? "item" : "item-highlight"}`]}>{item.name}</div>
+      <div className={styles[`${item.station === selectedStation ? "item-highlight" : "item"}`]}>{item.name}</div>
       <div className={styles["ingredients-wrapper"]}>
         {ingredientsSelected &&
           ingredientsSelected.map((ingredient) => {
@@ -37,7 +34,6 @@ export default function Items({ item }: { item: MenuItem }) {
               </div>
             );
           })}
-
         {ingredientsNotSelected.length > 0 && (
           <div className={styles["not-selected"]}>
             {ingredientsNotSelected.map((ingredient) => {
@@ -52,7 +48,6 @@ export default function Items({ item }: { item: MenuItem }) {
             })}
           </div>
         )}
-
         {ingredientsAdded.length > 0 && (
           <div className={styles["added"]}>
             {ingredientsAdded.map((ingredient) => {

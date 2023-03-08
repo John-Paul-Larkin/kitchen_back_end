@@ -26,6 +26,8 @@ export default function MainScreen() {
   }, []);
 
   useEffect(() => {
+    // sets a listener for any new orders
+    // splits the orders by timing status, and sets state for each group 
     const q = query(collection(db, "orders"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let orders: OrderDetails[] = [];

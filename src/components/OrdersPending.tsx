@@ -41,7 +41,7 @@ export default function OrdersPending({
 
   const tenMinutes = 600000;
   const timerFinishTime = new Date(order.timeOrderPlaced! + tenMinutes);
-  const timeOrderPlaced = new Date(order.timeOrderPlaced!).toLocaleTimeString().substring(0, 5);
+  const timeOrderPlaced = new Date(order.timeOrderPlaced!).toLocaleTimeString().substring(0, 4);
 
   // button which sets order status to ready
   const sendFirestore = useFirestore();
@@ -66,7 +66,7 @@ export default function OrdersPending({
     <>
       {itemsToDisplay.length > 0 && (
         <div className={styles["single-order-pending"]} style={{ left: order.gapInPixels }}>
-          <div className={styles["single-order-header"]}>
+          <div className={styles["pending-order-heading"]}>
             <div className={styles["order-timer"]}>
               {isMultipleTables && (
                 <div
@@ -78,6 +78,7 @@ export default function OrdersPending({
               )}
               <Timer finishTime={timerFinishTime} order={order} />
             </div>
+
             <span className={styles["order-table"]}>
               <span>
                 <span>Table {order.tableNumber}</span>

@@ -75,20 +75,25 @@ export default function OrdersTimeUp({ order, tablesWithMultipleOrders }: { orde
     <>
       {itemsToDisplay.length > 0 && (
         <motion.div exit={exit} transition={transition} className={styles["single-order-timeUp"]}>
-          {isMultipleTables && (
-            <div
-              className={styles["dot-time-up"]}
-              style={{
-                backgroundColor: multipleTableDotColor,
-              }}
-            ></div>
-          )}
-          <Stopwatch startTime={swStartTime} />
-          <span>
-            Table {order.tableNumber}
-            <span> - {order.server}</span>
-          </span>
-
+          <div className={styles["timeUp-order-heading"]}>
+            {isMultipleTables && (
+              <div
+                className={styles["dot-time-up"]}
+                style={{
+                  backgroundColor: multipleTableDotColor,
+                }}
+              ></div>
+            )}
+            <div className={styles["order-timer"]}>
+              <Stopwatch startTime={swStartTime} />
+            </div>
+            <span className={styles["order-table"]}>
+              <span>
+                Table {order.tableNumber}
+                <span> - {order.server}</span>
+              </span>
+            </span>
+          </div>
           {itemsToDisplay &&
             itemsToDisplay.map((item) => {
               return (

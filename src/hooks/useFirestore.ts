@@ -24,6 +24,8 @@ interface FireSetTimeUp {
 
 type Firestore = FireSetTimeUp | FireSetReadyStatus | FireSetClosedStatus | FireSetReadyFromPending;
 
+
+
 export default function useFirestore() {
   const sendFirestore = async (input: Firestore) => {
     if (input.type === "setTimeUp") {
