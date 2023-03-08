@@ -20,7 +20,7 @@ export default function Items({ item }: { item: MenuItem }) {
   );
 
   return (
-    <div>
+    <div className={styles[`${item.station === selectedStation ? "item-highlight-font" : "item-font"}`]}>
       <div className={styles[`${item.station === selectedStation ? "item-highlight" : "item"}`]}>{item.name}</div>
       <div className={styles["ingredients-wrapper"]}>
         {ingredientsSelected &&

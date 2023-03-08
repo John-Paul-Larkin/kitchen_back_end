@@ -27,19 +27,13 @@ export default function OrdersTimeUp({ order, tablesWithMultipleOrders }: { orde
 
   // Sorts the order to display a particular stations items at the top
   // no bar items on kitchen docket - no food items on bar docket etc
-
   if (selectedStation === "bar") {
     itemsToDisplay = itemsToDisplay.filter((item) => item.station === "bar");
-  } else if (selectedStation !== "expeditor") {
+  } else {
     itemsToDisplay = itemsToDisplay.filter((item) => item.station !== "bar");
     // Sorts the order to display a particular stations items at the top
     itemsToDisplay.sort((a, b) => {
       return Number(b.station === selectedStation) - Number(a.station === selectedStation);
-    });
-  } else if (selectedStation === "expeditor") {
-    itemsToDisplay.sort((a, b) => {
-      //display drinks at the bottom for the expeditor
-      return Number(a.station === "bar") - Number(b.station === "bar");
     });
   }
 
@@ -51,11 +45,7 @@ export default function OrdersTimeUp({ order, tablesWithMultipleOrders }: { orde
   //Starts the stopwatch from the moment the timer ends
   const swStartTime = new Date(order.timeTimeUp!);
 
-  // const initial = { opacity: 0 };
-  // const animate = { opacity: 1 };
   const exit = { opacity: 0, x: 50, height: 120, width: 90 };
-  // const transition = { duration: 3 };
-  // const transition2 = { duration: 0.1 };
   const transition = { height: { duration: 2 }, width: { duration: 2 }, opacity: { duration: 0.25 } };
 
   // if this is order is on a table with mutiple orders
@@ -68,8 +58,6 @@ export default function OrdersTimeUp({ order, tablesWithMultipleOrders }: { orde
       multipleTableDotColor = table.color;
     }
   });
-
-  // initial={initial} animate={animate} exit={exit} transition={transition}
 
   return (
     <>

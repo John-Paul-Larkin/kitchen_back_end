@@ -23,19 +23,13 @@ export default function OrdersPending({
   // Sorts the order to display a particular stations items at the top
   // no bar items on kitchen docket
   // no food items on bar docket
-
   if (selectedStation === "bar") {
     itemsToDisplay = itemsToDisplay.filter((item) => item.station === "bar");
-  } else if (selectedStation !== "expeditor") {
+  } else {
     itemsToDisplay = itemsToDisplay.filter((item) => item.station !== "bar");
     // Sorts the order to display a particular stations items at the top
     itemsToDisplay.sort((a, b) => {
       return Number(b.station === selectedStation) - Number(a.station === selectedStation);
-    });
-  } else if (selectedStation === "expeditor") {
-    itemsToDisplay.sort((a, b) => {
-      //display drinks at the bottom for the expeditor
-      return Number(a.station === "bar") - Number(b.station === "bar");
     });
   }
 
