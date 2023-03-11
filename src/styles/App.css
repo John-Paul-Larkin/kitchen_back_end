@@ -28,3 +28,6 @@ picture {
   --three: #e3caa5;
   --four: #fffbe9;
 }
+body {
+  overflow-y: hidden;
+}

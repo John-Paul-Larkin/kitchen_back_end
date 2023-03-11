@@ -21,6 +21,7 @@
   position: relative;
 
   padding-top: 5px;
+  overflow-y: hidden;
 }
 
 .timeup-orders-wrapper {
@@ -41,6 +42,7 @@
 }
 .closed-orders-sidebar {
   border-top: 2px solid black;
+  overflow-y: hidden;
 }
 
 .single-order-ready {
@@ -154,6 +156,7 @@
   margin: 5px;
   font-size: 0.8em;
   box-shadow: 2px 2px 2px var(--one);
+  cursor: pointer;
 }
 
 .pending-order-heading {
@@ -227,4 +230,17 @@
 
 .item-font {
   font-size: 0.8em;
+}
+
+.closed-order-hover {
+  position: absolute;
+  top: 100px;
+  right: 120px;
+  background-color: bisque;
+  padding: 0.4em;
+  border-radius: 20px;
+  margin: 2px;
+  width: 180px;
+  color: black;
+  border: 1px solid black;
 }
