@@ -6,7 +6,9 @@ export default function OrdersTimeline({
   openOrders,
   countOfTimeUp,
   tablesWithMultipleOrders,
+  showNoOrdersMessage,
 }: {
+  showNoOrdersMessage: boolean;
   openOrders: OrderDetails[];
   countOfTimeUp: number;
   tablesWithMultipleOrders: MultipleTable[];
@@ -20,7 +22,6 @@ export default function OrdersTimeline({
   const remainingSpace = width - numberOfOrders * 190;
 
   const [gapsInPixels, setGapsInPixels] = useState<number[]>([]);
-
 
   useEffect(() => {
     let gapTime: number[] = [];
@@ -82,6 +83,14 @@ export default function OrdersTimeline({
 
   return (
     <div ref={containerRef} className={styles["open-orders-wrapper"]}>
+      {!showNoOrdersMessage && (
+        <div className={styles["no-orders-message"]}>
+          <div>
+            <div>There are currently no open orders.</div>
+            <div><a href="https://kitchenpos.netlify.app/?">Click here</a> to open the POS app.</div>
+          </div>
+        </div>
+      )}
       <div>
         {openOrdersWithGap &&
           openOrdersWithGap.map((order) => <OrdersPending key={order.orderId} order={order} tablesWithMultipleOrders={tablesWithMultipleOrders} />)}

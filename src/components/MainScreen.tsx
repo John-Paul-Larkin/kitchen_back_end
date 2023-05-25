@@ -7,8 +7,8 @@ import styles from "../styles/MainScreen.module.css";
 import Header from "./Header";
 import OrdersClosed from "./OrdersClosed";
 import OrdersReady from "./OrdersReady";
-import OrdersTimeline from "./OrdersTimeline";
 import OrdersTimeUp from "./OrdersTimeUp";
+import OrdersTimeline from "./OrdersTimeline";
 
 export default function MainScreen() {
   const [openOrders, setOpenOrders] = useState<OrderDetails[]>([]);
@@ -16,6 +16,7 @@ export default function MainScreen() {
   const [readyOrders, setReadyOrders] = useState<OrderDetails[]>([]);
   const [closedOrders, setClosedOrders] = useState<OrderDetails[]>([]);
   const [tablesWithMultipleOrders, settablesWithMultipleOrders] = useState<MultipleTable[]>([]);
+  const [showNoOrdersMessage, setShowNoOrdersMessage] = useState(false);
 
   const changeOrdersStatusOnInintialLoad = useChangeOrdersStatusOnInintialLoad();
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function MainScreen() {
 
   useEffect(() => {
     // sets a listener for any new orders
-    // splits the orders by timing status, and sets state for each group 
+    // splits the orders by timing status, and sets state for each group
     const q = query(collection(db, "orders"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let orders: OrderDetails[] = [];
@@ -39,6 +40,12 @@ export default function MainScreen() {
       const timeUp = orders.filter((order) => order.orderStatus === "time up").sort((a, b) => b.timeTimeUp! - a.timeTimeUp!);
       const ready = orders.filter((order) => order.orderStatus === "ready").sort((a, b) => b.timeReady! - a.timeReady!);
       const closed = orders.filter((order) => order.orderStatus === "closed").sort((a, b) => b.timeClosed! - a.timeClosed!);
+
+      if (open.length > 0 || timeUp.length > 0 || ready.length > 0) {
+       // If there are no open orders we should display a message
+      // linking the user to the POS app.
+        setShowNoOrdersMessage(true);
+      }
 
       setOpenOrders([...open]);
       setTimeUpOrders([...timeUp]);
@@ -56,13 +63,11 @@ export default function MainScreen() {
 
   const countOfOpenOrders = openOrders.length + timeUpOrders.length + readyOrders.length;
 
-  console.log(tablesWithMultipleOrders);
-
   return (
     <div className={styles["main-screen"]}>
       <Header countOfOpenOrders={countOfOpenOrders} />
       <div className={styles["orders-wrapper"]}>
-        <OrdersTimeline openOrders={openOrders} countOfTimeUp={timeUpOrders.length} tablesWithMultipleOrders={tablesWithMultipleOrders} />
+        <OrdersTimeline showNoOrdersMessage={showNoOrdersMessage} openOrders={openOrders} countOfTimeUp={timeUpOrders.length} tablesWithMultipleOrders={tablesWithMultipleOrders} />
         <div className={styles["timeup-orders-wrapper"]}>
           <AnimatePresence>
             {timeUpOrders &&
@@ -87,6 +92,7 @@ export default function MainScreen() {
 function checkForMultipleOrdersOnSingleTable({ orders }: { orders: OrderDetails[] }) {
   // iterates through all the open orders, finds tables which have multiple orders
   // and for each table returns an object with the table number and a colour
+  // which will be displayed as an indicator to the user
 
   let tables = orders.filter((order) => order.orderStatus !== "closed").map((order) => order.tableNumber);
   const tableSet = new Set<string>();
