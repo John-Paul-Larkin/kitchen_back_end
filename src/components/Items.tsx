@@ -6,7 +6,8 @@ export default function Items({ item }: { item: MenuItem }) {
   const { selectedStation } = useContext(stationContext);
 
   // Sorts the items ingredients, and seperates them into selected, not selected and added.
-  // edited items will display with a strike through line
+  // 
+  // edited ingedients will display with a strike through line
   const ingredientsSelected = item.ingredients.filter(
     (ingredient) =>
       (ingredient.selected === true && ingredient.added !== true) ||

@@ -41,9 +41,10 @@ export default function MainScreen() {
       const ready = orders.filter((order) => order.orderStatus === "ready").sort((a, b) => b.timeReady! - a.timeReady!);
       const closed = orders.filter((order) => order.orderStatus === "closed").sort((a, b) => b.timeClosed! - a.timeClosed!);
 
-      if (open.length > 0 || timeUp.length > 0 || ready.length > 0) {
-       // If there are no open orders we should display a message
-      // linking the user to the POS app.
+      // if (open.length > 0 || timeUp.length > 0 || ready.length > 0) {
+      if (open.length === 0 && timeUp.length === 0 && ready.length === 0) {
+        // If there are no open orders we should display a message
+        // linking the user to the POS app.
         setShowNoOrdersMessage(true);
       }
 
@@ -67,7 +68,14 @@ export default function MainScreen() {
     <div className={styles["main-screen"]}>
       <Header countOfOpenOrders={countOfOpenOrders} />
       <div className={styles["orders-wrapper"]}>
-        <OrdersTimeline showNoOrdersMessage={showNoOrdersMessage} openOrders={openOrders} countOfTimeUp={timeUpOrders.length} tablesWithMultipleOrders={tablesWithMultipleOrders} />
+        <OrdersTimeline
+          showNoOrdersMessage={showNoOrdersMessage}
+          openOrders={openOrders}
+          countOfTimeUp={timeUpOrders.length}
+          tablesWithMultipleOrders={tablesWithMultipleOrders}
+          timeUpOrders={timeUpOrders}
+          readyOrders={readyOrders}
+        />
         <div className={styles["timeup-orders-wrapper"]}>
           <AnimatePresence>
             {timeUpOrders &&

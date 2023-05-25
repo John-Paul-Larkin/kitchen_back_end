@@ -79,8 +79,8 @@ export default function useChangeOrdersStatusOnInintialLoad() {
 
     batch
       .commit()
-      .then(() => console.log("ok"))
-      .then((error) => console.log("FB batch error", error));
+      .then((result) => console.log(result))
+      .catch((error) => console.log("FB batch error", error));
   }
 
   const getDocuments = async () => {

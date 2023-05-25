@@ -4,12 +4,16 @@ import OrdersPending from "./OrdersPending";
 
 export default function OrdersTimeline({
   openOrders,
+  timeUpOrders,
+  readyOrders,
   countOfTimeUp,
   tablesWithMultipleOrders,
   showNoOrdersMessage,
 }: {
-  showNoOrdersMessage: boolean;
+  timeUpOrders: OrderDetails[];
+  readyOrders: OrderDetails[];
   openOrders: OrderDetails[];
+  showNoOrdersMessage: boolean;
   countOfTimeUp: number;
   tablesWithMultipleOrders: MultipleTable[];
 }) {
@@ -83,11 +87,16 @@ export default function OrdersTimeline({
 
   return (
     <div ref={containerRef} className={styles["open-orders-wrapper"]}>
-      {!showNoOrdersMessage && (
+      {showNoOrdersMessage && openOrders.length === 0 && timeUpOrders.length === 0 && readyOrders.length === 0 && (
         <div className={styles["no-orders-message"]}>
           <div>
             <div>There are currently no open orders.</div>
-            <div><a href="https://kitchenpos.netlify.app/?">Click here</a> to open the POS app.</div>
+            <div>
+              <a href="https://kitchenpos.netlify.app/?" rel="noopener noreferrer" target="_blank">
+                Click here
+              </a>{" "}
+              to open the POS app.
+            </div>
           </div>
         </div>
       )}
