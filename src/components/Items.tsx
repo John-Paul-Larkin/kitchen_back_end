@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { BiErrorCircle, BiMessageX, BiPlus } from "react-icons/bi";
 import { stationContext } from "../context/StationContext";
 import styles from "../styles/MainScreen.module.css";
 
@@ -6,7 +7,7 @@ export default function Items({ item }: { item: MenuItem }) {
   const { selectedStation } = useContext(stationContext);
 
   // Sorts the items ingredients, and seperates them into selected, not selected and added.
-  // 
+  //
   // edited ingedients will display with a strike through line
   const ingredientsSelected = item.ingredients.filter(
     (ingredient) =>
@@ -37,20 +38,29 @@ export default function Items({ item }: { item: MenuItem }) {
           })}
         {ingredientsNotSelected.length > 0 && (
           <div className={styles["not-selected"]}>
-            {ingredientsNotSelected.map((ingredient) => {
-              return (
-                <div
-                  key={ingredient.ingredientId}
-                  className={styles[`${ingredient.edited ? (ingredient.selected ? "line-through" : undefined) : undefined}`]}
-                >
-                  No {ingredient.ingredient}
-                </div>
-              );
-            })}
+            <div className={styles["remove-ingredient-icon"]}>
+              <BiErrorCircle />
+            </div>
+            <div>
+              {ingredientsNotSelected.map((ingredient) => {
+                return (
+                  <div
+                    key={ingredient.ingredientId}
+                    className={styles[`${ingredient.edited ? (ingredient.selected ? "line-through" : undefined) : undefined}`]}
+                  >
+                    No {ingredient.ingredient}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
         {ingredientsAdded.length > 0 && (
           <div className={styles["added"]}>
+            <div className={styles["added-ingredient-icon"]}>
+              <BiPlus />
+            </div>
+            <div>
             {ingredientsAdded.map((ingredient) => {
               return (
                 <div
@@ -63,6 +73,7 @@ export default function Items({ item }: { item: MenuItem }) {
                 </div>
               );
             })}
+            </div>
           </div>
         )}
       </div>
