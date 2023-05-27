@@ -33,6 +33,12 @@ Other objective included reinforcing my prior understanding of reacts core conce
     </a>
     <br>
 </span>
+<span>
+    <a href="https://kitchendisplay.netlify.app/">
+      <img src="https://github.com/Fishamble/kitchenpos/blob/master/src/Assets/KitchenDisplay.jpg?raw=true" alt="POS" width="400px" />      
+    </a>
+    <br>
+</span>
 
 
 
