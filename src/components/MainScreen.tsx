@@ -110,6 +110,7 @@ export default function MainScreen() {
   );
 }
 
+
 function checkForMultipleOrdersOnSingleTable({ orders }: { orders: OrderDetails[] }) {
   // iterates through all the open orders, finds tables which have multiple orders
   // and for each table returns an object with the table number and a colour
