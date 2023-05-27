@@ -320,6 +320,7 @@
   justify-content: center;
   flex-direction: column;
   z-index: 9;
+  background-color: rgba(128, 128, 128,.7);
 }
 
 .screen-message {
