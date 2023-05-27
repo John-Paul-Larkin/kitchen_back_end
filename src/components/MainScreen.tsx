@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import db from "../firebase/firebaseconfig";
 import useChangeOrdersStatusOnInintialLoad from "../hooks/useChangeOrdersStatusOnInintialLoad";
+import useIsScreenTooSmall from "../hooks/useIsScreenTooSmall";
 import styles from "../styles/MainScreen.module.css";
 import Header from "./Header";
 import OrdersClosed from "./OrdersClosed";
@@ -19,6 +20,10 @@ export default function MainScreen() {
   const [showNoOrdersMessage, setShowNoOrdersMessage] = useState(false);
 
   const changeOrdersStatusOnInintialLoad = useChangeOrdersStatusOnInintialLoad();
+
+  //Sets an event listener to check if user is on a screen smaller than 700px
+  const isWidthLessThan700 = useIsScreenTooSmall();
+
   useEffect(() => {
     // Queries all the open orders and updates the timing status. ie closes time out orders,
     // or moves open orders to ready, depending on the elapsed time since app was last run.
@@ -66,6 +71,14 @@ export default function MainScreen() {
 
   return (
     <div className={styles["main-screen"]}>
+      {isWidthLessThan700 && (
+        <div className={styles["screen-too-small"]}>
+          <div className={styles["screen-message"]}>
+            <div>This kitchen diplay app was designed to designed to run on larger screens, therefore it wont display correctly on mobile.</div>
+            <div>Please open the app on a screen wider than 700px.</div>
+          </div>
+        </div>
+      )}
       <Header countOfOpenOrders={countOfOpenOrders} />
       <div className={styles["orders-wrapper"]}>
         <OrdersTimeline
