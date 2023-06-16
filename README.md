@@ -36,7 +36,8 @@ Other objective included reinforcing my prior understanding of reacts core conce
 </span>
 
 
-[<img src="https://github.com/Fishamble/kitchenpos/blob/master/src/Assets/kithenDisplay.jpg" width="600" />](https://www.youtube.com/embed/vgQ1oEJDxEU)
+Click the image below to watch a short introductory video eplaining the main features of the app.
+
 [<img src="https://img.youtube.com/vi/vgQ1oEJDxEU/0.jpg" width="600" />](https://www.youtube.com/embed/vgQ1oEJDxEU)
 ## Contact
 
