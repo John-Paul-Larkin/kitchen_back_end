@@ -35,10 +35,9 @@ Other objective included reinforcing my prior understanding of reacts core conce
 <br>
 </span>
 
-[![Watch the video](https://github.com/Fishamble/kitchenpos/blob/master/src/Assets/kithenDisplay.jpg)](https://www.youtube.com/embed/vgQ1oEJDxEU)
 
-[<img src="https://github.com/Fishamble/kitchenpos/blob/master/src/Assets/kithenDisplay.jpg" width="600" height="300"/>](https://www.youtube.com/embed/vgQ1oEJDxEU)
-
+[<img src="https://github.com/Fishamble/kitchenpos/blob/master/src/Assets/kithenDisplay.jpg" width="600" />](https://www.youtube.com/embed/vgQ1oEJDxEU)
+[<img src="https://img.youtube.com/vi/vgQ1oEJDxEU/0.jpg" width="600" />](https://www.youtube.com/embed/vgQ1oEJDxEU)
 ## Contact
 
 John Paul Larkin - johnplarkin@gmail.com
