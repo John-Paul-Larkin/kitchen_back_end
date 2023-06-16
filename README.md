@@ -28,7 +28,7 @@ Other objective included reinforcing my prior understanding of reacts core conce
 
 [<img src="https://img.youtube.com/vi/vgQ1oEJDxEU/0.jpg" width="400" />](https://www.youtube.com/embed/vgQ1oEJDxEU)
 
-▶ 👆 👆 👆 👆 👆 👆 👆 👆 👆 👆 ☝ ☝ ☝ ☝ ☝ ▶ 
+▶  ☝ ☝ ☝ ☝ ☝ ☝ ☝ ☝ ☝ ☝ ☝ ☝ ☝ ☝ ☝ ▶ 
 
 
 Click the image above to watch a short introductory video explaining the main features of the app.
