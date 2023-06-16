@@ -35,11 +35,9 @@ Other objective included reinforcing my prior understanding of reacts core conce
 <br>
 </span>
 
-{% raw %}
-{% include youtube.html id="vgQ1oEJDxEU" %}
-{% endraw %}
+[![Watch the video](https://github.com/Fishamble/kitchenpos/blob/master/src/Assets/kithenDisplay.jpg)](https://www.youtube.com/embed/vgQ1oEJDxEU)
 
-{% include youtube.html id="vgQ1oEJDxEU" %}
+[<img src="https://github.com/Fishamble/kitchenpos/blob/master/src/Assets/kithenDisplay.jpg" width="600" height="300"/>](https://www.youtube.com/embed/vgQ1oEJDxEU)
 
 ## Contact
 
