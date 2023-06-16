@@ -23,9 +23,14 @@ Note: While the POS app was designed for mobile, the display app requires a **la
 My primary objective while developing this project was to expand my knowledge around Redux and how it can be used to manage complex state in React applications. I developed my understanding of the Redux architecture, including its core principles, such as state management, immutability, and reducers.
 Other objective included reinforcing my prior understanding of reacts core concepts, such as components, state, props, and lifecycle methods.
 
-Click the image below to watch a short introductory video explaining the main features of the app.
+
+
 
 [<img src="https://img.youtube.com/vi/vgQ1oEJDxEU/0.jpg" width="400" />](https://www.youtube.com/embed/vgQ1oEJDxEU)
+
+▶
+
+Click the image above to watch a short introductory video explaining the main features of the app.
 
 <span>
 <a href="https://kitchenpos.netlify.app/">
